@@ -1,3 +1,7 @@
+execute pathogen#infect()
+syntax on
+filetype plugin indent on
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 一般设定 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
@@ -117,3 +121,6 @@ set wrap
 
 " 粘贴代码时候的关闭自动缩进
 set pastetoggle=<F9>
+
+" open nerdtree
+map <C-n> :NERDTreeToggle<CR>
