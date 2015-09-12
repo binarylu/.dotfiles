@@ -35,7 +35,7 @@ doIt() {
         echo "${COLOR_RED}Found ${filename}.${COLOR_RESET} Backing up to $MYDOT/.${1}.bak.";
         mv $filename $MYDOT/.${1}.bak
     fi
-    cp $MYDOT/$1 $filename
+    cp -r $MYDOT/$1 $filename
 }
 
 install() {
@@ -69,32 +69,3 @@ if [ "$TEST_CURRENT_SHELL" != "zsh" ]; then
 elif [ "$TEST_CURRENT_SHELL" != "bash" ]; then
     . ~/.bashrc
 fi
-
-#echo ""
-#read -p "${COLOR_GREEN}Install .bashrc? (y/n) ${COLOR_RESET}" -n 1;
-#if [ $REPLY = "Y" ] || [ $REPLY = "y" ]; then
-#    doIt bashrc
-#fi
-#
-## MacOS
-#if [ $os = "mac" ]; then
-#    doIt bash_profile
-#fi
-#
-#echo ""
-#read -p "${COLOR_GREEN}Install .zshrc? (y/n) ${COLOR_RESET}" -n 1;
-#if [ $REPLY = "Y" ] || [ $REPLY = "y" ]; then
-#    doIt zshrc
-#fi
-#
-#echo ""
-#read -p "${COLOR_GREEN}Install .vimrc? (y/n) ${COLOR_RESET}" -n 1;
-#if [ $REPLY = "Y" ] || [ $REPLY = "y" ]; then
-#    doIt vimrc
-#fi
-#
-#echo ""
-#read -p "${COLOR_GREEN}Install .gitconfig? (y/n) ${COLOR_RESET}" -n 1;
-#if [ $REPLY = "Y" ] || [ $REPLY = "y" ]; then
-#    doIt gitconfig
-#fi
