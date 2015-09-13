@@ -27,10 +27,11 @@ doIt() {
     filename=~/.$1
     bakdir=~/.dotfiles.bak
     if [ -f $filename ] || [ -h $filename ]; then
+        [ ! -d $bakdir ] && mkdir -p $bakdir
         echo "${COLOR_RED}Found ${filename}.${COLOR_RESET} Backing up to ${bakdir}/.${1}.bak.";
         mv $filename ${bakdir}/.${1}.bak
     fi
-    cp -r ${bakdir}/$1 $filename
+    cp -r ${MYDOT}/$1 $filename
 }
 
 install() {
@@ -49,8 +50,6 @@ hash git >/dev/null 2>&1 && env git clone --depth=1 https://github.com/binarylu/
 }
 
 ## config bash
-#TODO mac bashrc.mac & linux bashrc.linux
-
 if [ "$os" = "mac" ]; then
     install bash_profile
     mv ${MYDOT}/bashrc.mac ${MYDOT}/bashrc
@@ -73,7 +72,8 @@ install gitconfig
 
 ## config vim
 install vimrc
-install vim
+mkdir -p ~/.vim/autoload
+mkdir -p ~/.vim/bundle
 echo "${COLOR_GREEN}"
 read -p "Install vim plugin? (y/n) " -n 1;
 echo "${COLOR_RESET}"
@@ -85,13 +85,6 @@ if [ $REPLY = "Y" ] || [ $REPLY = "y" ]; then
     vim +PluginInstall +qall
 fi
 
-TEST_CURRENT_SHELL=$(expr "$SHELL" : '.*/\(.*\)')
-if [ "$TEST_CURRENT_SHELL" != "zsh" ]; then
-    . ~/.zshrc
-elif [ "$TEST_CURRENT_SHELL" != "bash" ]; then
-    . ~/.bashrc
-fi
-
 if [ "$os" = "mac" ]; then
     echo "${COLOR_GREEN}"
     read -p "Your OS is Mac OS, need to config webserver? (y/n) " -n 1;
@@ -99,6 +92,14 @@ if [ "$os" = "mac" ]; then
     if [ $REPLY = "Y" ] || [ $REPLY = "y" ]; then
         ${MYDOT}/apache_for_yosemite.sh
     fi
+fi
+
+TEST_CURRENT_SHELL=$(expr "$SHELL" : '.*/\(.*\)')
+if [ "$TEST_CURRENT_SHELL" = "zsh" ]; then
+    env zsh
+    . ~/.zshrc
+elif [ "$TEST_CURRENT_SHELL" = "bash" ]; then
+    . ~/.bashrc
 fi
 
 rm -fr $MYDOT
