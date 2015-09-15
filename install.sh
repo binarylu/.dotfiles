@@ -1,7 +1,5 @@
 set -e
 
-. /etc/profile
-
 [ -f "/usr/bin/sw_vers" ] && os="mac" || os="linux"
 
 [ $os = "mac" ] && echoflag="" || echoflag="-e"
@@ -23,9 +21,11 @@ if [ -d "$MYDOT" ]; then
     exit
 fi
 
+ts=`date +%s`
+bakdir=~/.dotfiles.bak.$ts
+
 doIt() {
     filename=~/.$1
-    bakdir=~/.dotfiles.bak
     if [ -f $filename ] || [ -h $filename ]; then
         [ ! -d $bakdir ] && mkdir -p $bakdir
         echo "${COLOR_RED}Found ${filename}.${COLOR_RESET} Backing up to ${bakdir}/.${1}.bak.";
@@ -72,18 +72,27 @@ install gitconfig
 
 ## config vim
 install vimrc
-mkdir -p ~/.vim/autoload
-mkdir -p ~/.vim/bundle
 echo "${COLOR_GREEN}"
 read -p "Install vim plugin? (y/n) " -n 1;
 echo "${COLOR_RESET}"
 if [ $REPLY = "Y" ] || [ $REPLY = "y" ]; then
-    rm -fr ~/.vim/autoload/pathogen.vim
-    rm -fr ~/.vim/bundle/Vundle.vim
-    rm -fr ~/.vim/bundle/vim-colors-solarized
-    curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
-    git clone --depth=1 https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+    if [ -d ~/.vim ] || [ -h ~/.vim ]; then
+        [ ! -d $bakdir ] && mkdir -p $bakdir
+        echo "${COLOR_RED}Found ~/.vim.${COLOR_RESET} Backing up to ${bakdir}/.vim.bak.";
+        mv ~/.vim ${bakdir}/.vim.bak
+    fi
+    mkdir -p ~/.vim/autoload
+    mkdir -p ~/.vim/bundle
+    # pathogen
+    git clone --depth=1 https://github.com/tpope/vim-pathogen.git ~/.vim/vim-pathogen
+    cp ~/.vim/vim-pathogen/autoload/pathogen.vim ~/.vim/autoload/pathogen.vim
+    rm -fr ~/.vim/vim-pathogen
+    # Plugin auto-pairs
+    git clone git://github.com/jiangmiao/auto-pairs.git ~/.vim/bundle/auto-pairs
+    # solarized
     git clone --depth=1 https://github.com/altercation/vim-colors-solarized.git ~/.vim/bundle/vim-colors-solarized
+    # Vundle
+    git clone --depth=1 https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
     vim +PluginInstall +qall
 fi
 
