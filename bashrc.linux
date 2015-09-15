@@ -13,12 +13,12 @@ COLOR_RESET=$(  echo -e "\e[0m"    )
 
 ip=`/sbin/ifconfig | grep -A3 '^eth0' | grep 'inet ' | awk '{print $2}' | cut -d':' -f2`
 #export PS1="${COLOR_RED}\u${COLOR_RESET}:${COLOR_BLUE}\w${COLOR_RESET}\\$ "
-export PS1="[\t]\u@linux-lab:\w\\$ "
+export PS1="[\t]\u@$ip:\w\\$ "
 
 export CLICOLOR="xterm-color"
 export LSCOLORS=exfxcxdxcxegedabagacad
 alias ..='cd ..'
 alias l='ls -Al --color=auto'
 alias ll='ls -l --color=auto'
-alias la='ls -al --color-auto'
+alias la='ls -al --color=auto'
 alias grep='grep --color=auto'
