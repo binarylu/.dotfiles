@@ -105,12 +105,13 @@ if [ "$os" = "mac" ]; then
     fi
 fi
 
+rm -fr $MYDOT
+
 TEST_CURRENT_SHELL=$(expr "$SHELL" : '.*/\(.*\)')
 if [ "$TEST_CURRENT_SHELL" = "zsh" ]; then
+    #TODO not going after env
     env zsh
     . ~/.zshrc
 elif [ "$TEST_CURRENT_SHELL" = "bash" ]; then
     . ~/.bashrc
 fi
-
-rm -fr $MYDOT
