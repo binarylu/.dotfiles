@@ -202,9 +202,11 @@ endfunction
 
 function! Textwidth()
     if &textwidth == "80"
-        exec "textwidth=0"
+        exec "set textwidth=0"
+        exec "echo 'textwidth=0'"
     else
-        exec "textwidth=80"
+        exec "set textwidth=80"
+        exec "echo 'textwidth=80'"
     fi
 endfunction
 
