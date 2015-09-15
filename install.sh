@@ -1,6 +1,6 @@
 set -e
 
-source /etc/profile
+. /etc/profile
 
 [ -f "/usr/bin/sw_vers" ] && os="mac" || os="linux"
 
