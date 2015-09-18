@@ -286,6 +286,7 @@ noremap <leader>W :w !sudo tee % > /dev/null<CR>
 inoremap <F5> <ESC>:call Compile()<CR>
 noremap <F5> <ESC>:call Compile()<CR>
 noremap <F2> <ESC>:call Textwidth()<CR>
+noremap <F8> <ESC>:set invlist<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Theme
