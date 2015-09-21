@@ -1,11 +1,11 @@
 [filter "media"]
-	required = true
-	clean = git media clean %f
-	smudge = git media smudge %f
+    required = true
+    clean = git media clean %f
+    smudge = git media smudge %f
 [core]
-	editor = vim
+    editor = vim
 [alias]
-	st = status
-	ci = commit
-	co = checkout
+    st = status
+    ci = commit
+    co = checkout
     lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
