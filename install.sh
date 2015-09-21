@@ -101,7 +101,7 @@ if [ "$os" = "mac" ]; then
     read -p "Your OS is Mac OS, need to config webserver? (y/n) " -n 1;
     echo "${COLOR_RESET}"
     if [ $REPLY = "Y" ] || [ $REPLY = "y" ]; then
-        sodu ${MYDOT}/apache_for_yosemite.sh
+        sudo ${MYDOT}/apache_for_yosemite.sh
     fi
 fi
 
