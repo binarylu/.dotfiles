@@ -279,6 +279,7 @@ endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Map
+" Check the key description: :h key-notation
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 noremap <leader>ss :call StripWhitespace()<CR>
 " Save a file as root (,W)
