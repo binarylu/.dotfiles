@@ -205,7 +205,7 @@ function! Compile()
 endfunction
 
 function! Textwidth()
-    if &textwidth == "80"
+    if &textwidth == "76"
         exec "set textwidth=0"
         exec "echo 'textwidth=0'"
     else
