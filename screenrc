@@ -18,7 +18,7 @@ altscreen off
 
 hardstatus on
 hardstatus alwayslastline
-hardstatus string "%{= b}::%{= B}:: %{W}| %{b}%-w%{= r}[%{=b B}%n %t%{= r}]%{b}%+w %{W}| %= %{K}%l %{W}| %{g}%H %{W}| %{m}%D %M %d%{= c} %C%A%{-} %{= B}::%{= b}::"
+hardstatus string "%{= b}::%{= B}:: %{W}| %{b}%-w%{= r}[%{=b B}%n %t%{= r}]%{b}%+w %{W}| %= %{K}%l %{W}| %{g}%H %{W}| %{m}%D %M %d%{= c} %C%A %{= B}::%{= b}::"
 terminfo xterm*|rxvt ti@:te@
 terminfo rxvt-unicode 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
 terminfo xterm* 'XT:hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
