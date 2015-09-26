@@ -70,6 +70,9 @@ unset CHECK_ZSH_INSTALLED
 ## config git
 install gitconfig
 
+## config screen
+install screenrc
+
 ## config vim
 install vimrc
 echo "${COLOR_GREEN}"
