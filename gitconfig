@@ -4,6 +4,7 @@
     smudge = git media smudge %f
 [core]
     editor = vim
+	autocrlf = true
 [alias]
     st = status
     ci = commit
