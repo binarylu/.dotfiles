@@ -1,5 +1,7 @@
 #/bin/sh
 
+# work for Yosemite and EI Capitan
+
 set -e
 
 source /etc/profile
