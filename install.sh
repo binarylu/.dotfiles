@@ -91,7 +91,9 @@ if [ $REPLY = "Y" ] || [ $REPLY = "y" ]; then
     cp ~/.vim/vim-pathogen/autoload/pathogen.vim ~/.vim/autoload/pathogen.vim
     rm -fr ~/.vim/vim-pathogen
     # Plugin auto-pairs
-    git clone git://github.com/jiangmiao/auto-pairs.git ~/.vim/bundle/auto-pairs
+    git clone --depth=1 git://github.com/jiangmiao/auto-pairs.git ~/.vim/bundle/auto-pairs
+    # Plugin NERD Tree
+    git clone --depth=1 https://github.com/scrooloose/nerdtree.git ~/.vim/bundle/nerdtree
     # solarized
     git clone --depth=1 https://github.com/altercation/vim-colors-solarized.git ~/.vim/bundle/vim-colors-solarized
     # Vundle
