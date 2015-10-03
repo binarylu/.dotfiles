@@ -211,8 +211,27 @@ function! Textwidth()
     else
         exec "set textwidth=80"
         exec "echo 'textwidth=80'"
-    fi
+    endif
 endfunction
+
+function! SetTab()
+    if &filetype == "ruby"
+        " Make tabs as wide as two spaces
+        set tabstop=2
+        " Number of spaces to use for each step of (auto)indent.  Used for |'cindent'|, |>>|, |<<|, etc.
+        set shiftwidth=2
+        " Treate space like <Tab> when BS the spaces
+        set softtabstop=2
+    else
+        " Make tabs as wide as two spaces
+        set tabstop=4
+        " Number of spaces to use for each step of (auto)indent.  Used for |'cindent'|, |>>|, |<<|, etc.
+        set shiftwidth=4
+        " Treate space like <Tab> when BS the spaces
+        set softtabstop=4
+    endif
+endfunction
+
 
 func SetTitle()
     let pos=[0,0,0,0]
@@ -275,6 +294,8 @@ if has("autocmd")
     " Treat .md files as Markdown
     autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
     autocmd BufNewFile *.py,*.sh,*.c,*.cc,*.cpp exec ":call SetTitle()"
+    " Set Tab format depends on file types
+    autocmd BufNewFile,BufRead * exec ":call SetTab()"
 endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
