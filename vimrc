@@ -317,8 +317,8 @@ nnoremap <C-l> <C-w>l
 " Resize window size
 noremap + <C-w>+
 noremap - <C-w>-
-noremap <C-[> <C-w><
-noremap <C-]> <C-w>>
+noremap <C-n> <C-w><
+noremap <C-m> <C-w>>
 
 " Toggle NERDTree
 noremap <F1> :NERDTreeToggle<CR>
