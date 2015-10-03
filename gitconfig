@@ -4,7 +4,11 @@
     smudge = git media smudge %f
 [core]
     editor = vim
-	autocrlf = true
+
+    # true:  convert to LF when committing and convert CRLF when pulling
+    # input: convert to LF when committing and do not convert when pulling
+    # false: do not convert when committing and pulling
+    # autocrlf = input 
 [alias]
     st = status
     ci = commit
