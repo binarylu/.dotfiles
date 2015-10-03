@@ -209,8 +209,8 @@ function! Textwidth()
         exec "set textwidth=0"
         exec "echo 'textwidth=0'"
     else
-        exec "set textwidth=80"
-        exec "echo 'textwidth=80'"
+        exec "set textwidth=76"
+        exec "echo 'textwidth=76'"
     endif
 endfunction
 
@@ -305,9 +305,26 @@ endif
 noremap <leader>ss :call StripWhitespace()<CR>
 " Save a file as root (,W)
 noremap <leader>W :w !sudo tee % > /dev/null<CR>
-inoremap <F5> <ESC>:call Compile()<CR>
-noremap <F5> <ESC>:call Compile()<CR>
+" Close highlight
+nnoremap <leader><CR> :nohlsearch<CR>
+
+" Move between different windows
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" Resize window size
+noremap + <C-w>+
+noremap - <C-w>-
+noremap <C-[> <C-w><
+noremap <C-]> <C-w>>
+
+" Toggle NERDTree
+noremap <F1> :NERDTreeToggle<CR>
 noremap <F2> <ESC>:call Textwidth()<CR>
+"inoremap <F5> <ESC>:call Compile()<CR>
+noremap <F5> <ESC>:call Compile()<CR>
 noremap <F8> <ESC>:set invlist<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
