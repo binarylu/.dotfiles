@@ -215,7 +215,7 @@ function! Textwidth()
 endfunction
 
 function! SetTab()
-    if &filetype == "ruby"
+    if &filetype == "ruby" || &filetype == "eruby"
         " Make tabs as wide as two spaces
         set tabstop=2
         " Number of spaces to use for each step of (auto)indent.  Used for |'cindent'|, |>>|, |<<|, etc.
@@ -307,6 +307,12 @@ noremap <leader>ss :call StripWhitespace()<CR>
 noremap <leader>W :w !sudo tee % > /dev/null<CR>
 " Close highlight
 nnoremap <leader><CR> :nohlsearch<CR>
+" Toggle NERDTree
+noremap <leader>tr :NERDTreeToggle<CR>
+" Toggle set list
+noremap <leader>ls <ESC>:set invlist<CR>
+" Toggle textwidth
+noremap <leader>tw <ESC>:call Textwidth()<CR>
 
 " Move between different windows
 nnoremap <C-h> <C-w>h
@@ -320,12 +326,8 @@ noremap - <C-w>-
 noremap <C-n> <C-w><
 noremap <C-m> <C-w>>
 
-" Toggle NERDTree
-noremap <F1> :NERDTreeToggle<CR>
-noremap <F2> <ESC>:call Textwidth()<CR>
 "inoremap <F5> <ESC>:call Compile()<CR>
 noremap <F5> <ESC>:call Compile()<CR>
-noremap <F8> <ESC>:set invlist<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Theme
