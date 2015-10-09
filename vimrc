@@ -167,7 +167,7 @@ set cindent
 "set nowrap
 set wrap
 " Maximum width of text that is being inserted.  A longer line will be broken after white space to get this width.  A zero value disables
-"set textwidth=76
+set textwidth=0
 
 " Allow backspace in insert mode
 set backspace=indent,eol,start
