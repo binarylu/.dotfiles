@@ -314,6 +314,17 @@ noremap <leader>ls <ESC>:set invlist<CR>
 " Toggle textwidth
 noremap <leader>tw <ESC>:call Textwidth()<CR>
 
+" Move between different Tabs
+nnoremap <leader>1 1gt
+nnoremap <leader>2 2gt
+nnoremap <leader>3 3gt
+nnoremap <leader>4 4gt
+nnoremap <leader>5 5gt
+nnoremap <leader>6 6gt
+nnoremap <leader>7 7gt
+nnoremap <leader>8 8gt
+nnoremap <leader>9 9gt
+
 " Move between different windows
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
