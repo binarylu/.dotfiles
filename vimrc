@@ -130,7 +130,7 @@ set modelines=4
 " Change mapleader
 let mapleader=","
 " Allow cursor keys in insert mode
-set esckeys
+"set esckeys
 " Use F9 to toggle paste mode
 set pastetoggle=<F9>
 
