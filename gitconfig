@@ -3,6 +3,7 @@
     clean = git media clean %f
     smudge = git media smudge %f
 [core]
+    excludesfile = ~/.gitignore_global
     editor = vim
 
     # true:  convert to LF when committing and convert CRLF when pulling

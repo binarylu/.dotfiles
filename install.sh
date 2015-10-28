@@ -69,6 +69,7 @@ unset CHECK_ZSH_INSTALLED
 
 ## config git
 install gitconfig
+install gitignore_global
 
 ## config screen
 install screenrc
