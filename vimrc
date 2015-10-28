@@ -131,6 +131,10 @@ set modelines=4
 let mapleader=","
 " Allow cursor keys in insert mode
 set esckeys
+" timeout for map keys
+set timeoutlen=1000
+" timeout for terminal, the curosr command
+set ttimeoutlen=100
 " Use F9 to toggle paste mode
 set pastetoggle=<F9>
 
@@ -148,6 +152,10 @@ set magic
 set showmatch
 " The time to highlight the matched brackets when insert a bracket (Unit: ms)
 set matchtime=5
+" Highlight setting for cursorline
+hi CursorLine cterm=NONE ctermbg=darkgrey ctermfg=NONE guibg=darkgrey guifg=NONE
+" Highlight current line
+set cursorline
 
 " Make tabs as wide as two spaces
 set tabstop=4
@@ -304,6 +312,11 @@ if has("autocmd")
     autocmd BufNewFile *.py,*.sh,*.c,*.cc,*.cpp exec ":call SetTitle()"
     " Set Tab format depends on file types
     autocmd BufNewFile,BufRead * exec ":call SetTab()"
+
+    " Do not hightlight the current line when entering insert mode
+    autocmd InsertEnter * se nocul
+    " Hightlight the current line after leaving insert mode
+    autocmd InsertLeave * se cul
 endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
