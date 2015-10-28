@@ -95,6 +95,8 @@ if [ $REPLY = "Y" ] || [ $REPLY = "y" ]; then
     git clone --depth=1 git://github.com/jiangmiao/auto-pairs.git ~/.vim/bundle/auto-pairs
     # Plugin NERD Tree
     git clone --depth=1 https://github.com/scrooloose/nerdtree.git ~/.vim/bundle/nerdtree
+    # Plugin NERD commenter
+    git clone --depth=1 https://github.com/scrooloose/nerdcommenter.git ~/.vim/bundle/nerdcommenter
     # Plugin vim-rails
     git clone --depth=1 git://github.com/tpope/vim-rails.git ~/.vim/bundle/vim-rails
     # solarized

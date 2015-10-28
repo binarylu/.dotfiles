@@ -19,6 +19,18 @@ Plugin 'tomtom/tlib_vim'
 Plugin 'garbas/vim-snipmate'
 Plugin 'honza/vim-snippets'
 
+" Plugin taglist
+Plugin 'taglist.vim'
+
+" Plugin for display css color in css file
+Plugin 'css_color.vim'
+
+" Manager windows, combind NERDtree and taglist
+"Plugin 'winmanager'
+
+" Manage buffer
+"Plugin 'minibufexplorerpp'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -331,6 +343,8 @@ noremap <leader>W :w !sudo tee % > /dev/null<CR>
 nnoremap <leader><CR> :nohlsearch<CR>
 " Toggle NERDTree
 noremap <leader>tr :NERDTreeToggle<CR>
+" Toggle taglist
+noremap <leader>tl :TlistToggle<CR>
 " Toggle set list
 noremap <leader>ls <ESC>:set invlist<CR>
 " Toggle textwidth
@@ -378,3 +392,34 @@ endif
 " Solarized will use the default (transparent) background of the terminal
 " emulator. urxvt required this in my testing; iTerm2 did not.
 let g:solarized_termtrans=1
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" taglist settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Only show the current file tag
+"let Tlist_Show_One_File=1
+" Exit vim if taglist window is the last window
+let Tlist_Exit_OnlyWindow=1
+" ctags command path
+"let Tlist_Ctags_Cmd='/usr/local/bin/ctags'
+" Sort tags by name or appearance order
+"let Tlist_Sort_Type='name'
+" taglist appears at the right
+let Tlist_Use_Right_Window=1
+" Show taglist menu in gvim
+let Tlist_Show_Menu=1
+" Open taglist window automatically when open vim
+"let Tlist_Auto_Open=1
+" Close taglist window after select one tag
+"let Tlist_Close_On_Select=1
+" Only show current file tag, the others folded
+let Tlist_File_Fold_Auto_Close=1
+" taglist window gains the focus when TlistToggle
+"let Tlist_GainFocus_On_ToggleOpen=1
+" taglist analysis tags file no matter the taglist window is open or not
+"let Tlist_Process_File_Always=1
+" The height and width of taglist window
+"let Tlist_WinHeight=
+"let Tlist_WinWidth=
+" Show taglist window horizontally
+"let Tlist_Use_Horiz_Window=1
