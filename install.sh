@@ -104,6 +104,9 @@ if [ $REPLY = "Y" ] || [ $REPLY = "y" ]; then
     # Vundle
     git clone --depth=1 https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
     vim +PluginInstall +qall
+    # Install plugin YouCompleteMe
+    cd ~/.vim/bundle/YouCompleteMe
+    ./install --clang-completer
 fi
 
 if [ "$os" = "mac" ]; then
