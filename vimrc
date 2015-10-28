@@ -130,7 +130,7 @@ set modelines=4
 " Change mapleader
 let mapleader=","
 " Allow cursor keys in insert mode
-"set esckeys
+set esckeys
 " Use F9 to toggle paste mode
 set pastetoggle=<F9>
 
@@ -191,6 +191,14 @@ function! StripWhitespace()
     let save_cursor = getpos(".")
     let old_query = getreg('/')
     :%s/\s\+$//e
+    call setpos('.', save_cursor)
+    call setreg('/', old_query)
+endfunction
+
+function! RemoveCR()
+    let save_cursor = getpos(".")
+    let old_query = getreg('/')
+    :%s///e
     call setpos('.', save_cursor)
     call setreg('/', old_query)
 endfunction
@@ -303,6 +311,7 @@ endif
 " Check the key description: :h key-notation
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 noremap <leader>ss :call StripWhitespace()<CR>
+noremap <leader>cr :call RemoveCR()<CR>
 " Save a file as root (,W)
 noremap <leader>W :w !sudo tee % > /dev/null<CR>
 " Close highlight
