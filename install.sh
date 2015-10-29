@@ -99,6 +99,9 @@ if [ $REPLY = "Y" ] || [ $REPLY = "y" ]; then
     git clone --depth=1 https://github.com/scrooloose/nerdcommenter.git ~/.vim/bundle/nerdcommenter
     # Plugin vim-rails
     git clone --depth=1 git://github.com/tpope/vim-rails.git ~/.vim/bundle/vim-rails
+    # Plugin syntastic
+    git clone --depth=1 https://github.com/scrooloose/syntastic.git ~/.vim/bundle/syntastic
+
     # solarized
     git clone --depth=1 https://github.com/altercation/vim-colors-solarized.git ~/.vim/bundle/vim-colors-solarized
     # Vundle
