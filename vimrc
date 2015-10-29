@@ -23,10 +23,7 @@ Plugin 'honza/vim-snippets'
 Plugin 'taglist.vim'
 
 " Plugin YouCompleteMe
-Bundle 'Valloric/YouCompleteMe'
-
-" Plugin for display css color in css file
-Plugin 'css_color.vim'
+"Bundle 'Valloric/YouCompleteMe'
 
 " Manager windows, combind NERDtree and taglist
 "Plugin 'winmanager'
