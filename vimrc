@@ -28,6 +28,7 @@ Plugin 'jiangmiao/auto-pairs'
 Plugin 'minibufexplorerpp'                    " Manage buffer
 "Plugin 'Valloric/YouCompleteMe'
 "Plugin 'winmanager'                          " Manager windows, combind NERDtree and taglist
+"Plugin 'terryma/vim-multiple-cursors'
 
 
 " Theme
