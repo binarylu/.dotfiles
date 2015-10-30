@@ -448,7 +448,7 @@ let g:syntastic_loc_list_height = 5
 let g:syntastic_cpp_compiler = 'g++'
 let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++ -Wall'
 let g:syntastic_c_compiler = 'gcc'
-let g:syntastic_c_compiler_options = ' -Wall'
+let g:syntastic_c_compiler_options = ' -Wall -pedantic-errors'
 " }}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -456,6 +456,7 @@ let g:syntastic_c_compiler_options = ' -Wall'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:miniBufExplSplitToEdge = 0
 let g:miniBufExplModSelTarget = 1
+let g:miniBufExplorerMoreThanOne = 3
 " }}}
 
 " vim:ft=vim:fdm=marker:ff=unix:nowrap:tabstop=4:shiftwidth=4:softtabstop=4:smarttab:shiftround:expandtab
