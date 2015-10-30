@@ -346,7 +346,7 @@ nnoremap <leader><CR> :nohlsearch<CR>
 " Toggle NERDTree
 noremap <leader>tr :NERDTreeToggle<CR>
 " Toggle tagbar
-noremap <leader>tl :TagbarToggle<CR>
+noremap <leader>tb :TagbarToggle<CR>
 " Toggle set list
 noremap <leader>ls <ESC>:set invlist<CR>
 " Toggle textwidth
@@ -402,6 +402,7 @@ let g:tagbar_width = 30
 let g:tagbar_zoomwidth = 0
 let g:tagbar_autofocus = 1
 let g:tagbar_sort = 0
+let g:tagbar_previewwin_pos = 'botright'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " syntastic settings
