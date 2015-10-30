@@ -32,7 +32,7 @@ Plugin 'minibufexplorerpp'                    " Manage buffer
 
 
 " Theme
-Plugin 'altercation/vim-colors-solarized'
+"Plugin 'altercation/vim-colors-solarized'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
