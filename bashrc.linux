@@ -22,3 +22,10 @@ alias l='ls -Al --color=auto'
 alias ll='ls -l --color=auto'
 alias la='ls -al --color=auto'
 alias grep='grep --color=auto'
+
+if [ -d "$HOME/.rvm/bin"  ]; then
+    export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+fi
+
+PATH=`perl -e 'print join ":", grep {!$h{$_}++} split ":", $ENV{PATH}'`
+export PATH
