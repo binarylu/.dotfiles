@@ -1,5 +1,5 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" For Vundle
+" For Vundle {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible              " be iMproved, required
 filetype off                  " required
@@ -25,6 +25,7 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-rails'
 Plugin 'jiangmiao/auto-pairs' 
+Plugin 'a.vim'                                " Quickly switch between source files and header files
 Plugin 'minibufexplorerpp'                    " Manage buffer
 "Plugin 'Valloric/YouCompleteMe'
 "Plugin 'winmanager'                          " Manager windows, combind NERDtree and taglist
@@ -48,16 +49,18 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
+" }}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" For pathogen
+" For pathogen {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 execute pathogen#infect()
 syntax on
 filetype plugin indent on
+" }}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" For General Settings
+" For General Settings {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Enable syntax highlighting
 syntax on
@@ -205,9 +208,10 @@ set number
 " Show “invisible” characters
 set listchars=tab:▸\ ,trail:·,eol:¬,nbsp:_
 "set list
+" }}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Functions
+" Functions {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Strip trailing whitespace (,ss)
 function! StripWhitespace()
@@ -263,7 +267,6 @@ function! SetTab()
     endif
 endfunction
 
-
 func SetTitle()
     let pos=[0,0,0,0]
     if &filetype == "sh"
@@ -302,8 +305,10 @@ func SetTitle()
     endif
     call setpos(".", pos)
 endfunc
+" }}}
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" autocmd
+" autocmd {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has("autocmd")
     " Use relative line numbers
@@ -333,9 +338,10 @@ if has("autocmd")
     " Hightlight the current line after leaving insert mode
     autocmd InsertLeave * se cul
 endif
+" }}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Map
+" Map {{{
 " Check the key description: :h key-notation
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 noremap <leader>ss :call StripWhitespace()<CR>
@@ -344,6 +350,8 @@ noremap <leader>cr :call RemoveCR()<CR>
 noremap <leader>W :w !sudo tee % > /dev/null<CR>
 " Close highlight
 nnoremap <leader><CR> :nohlsearch<CR>
+" Toggle MiniBufExplorer
+nnoremap <leader>b :TMiniBufExplorer<CR>
 " Toggle NERDTree
 noremap <leader>tr :NERDTreeToggle<CR>
 " Toggle tagbar
@@ -354,15 +362,26 @@ noremap <leader>ls <ESC>:set invlist<CR>
 noremap <leader>tw <ESC>:call Textwidth()<CR>
 
 " Move between different Tabs
-nnoremap <leader>1 1gt
-nnoremap <leader>2 2gt
-nnoremap <leader>3 3gt
-nnoremap <leader>4 4gt
-nnoremap <leader>5 5gt
-nnoremap <leader>6 6gt
-nnoremap <leader>7 7gt
-nnoremap <leader>8 8gt
-nnoremap <leader>9 9gt
+"nnoremap <leader>t1 1gt
+"nnoremap <leader>t2 2gt
+"nnoremap <leader>t3 3gt
+"nnoremap <leader>t4 4gt
+"nnoremap <leader>t5 5gt
+"nnoremap <leader>t6 6gt
+"nnoremap <leader>t7 7gt
+"nnoremap <leader>t8 8gt
+"nnoremap <leader>t9 9gt
+
+" Move between different Buffers
+nnoremap <leader>1 :b1<CR>
+nnoremap <leader>2 :b2<CR>
+nnoremap <leader>3 :b3<CR>
+nnoremap <leader>4 :b4<CR>
+nnoremap <leader>5 :b5<CR>
+nnoremap <leader>6 :b6<CR>
+nnoremap <leader>7 :b7<CR>
+nnoremap <leader>8 :b8<CR>
+nnoremap <leader>9 :b9<CR>
 
 " Move between different windows
 nnoremap <C-h> <C-w>h
@@ -378,9 +397,10 @@ noremap <C-m> <C-w>>
 
 "inoremap <F5> <ESC>:call Compile()<CR>
 noremap <F5> <ESC>:call Compile()<CR>
+" }}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Theme
+" Theme {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has('gui_running')
     set background=light
@@ -395,18 +415,20 @@ endif
 " Solarized will use the default (transparent) background of the terminal
 " emulator. urxvt required this in my testing; iTerm2 did not.
 let g:solarized_termtrans=1
+" }}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" tagbar settings
+" tagbar settings {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:tagbar_width = 30
 let g:tagbar_zoomwidth = 0
 let g:tagbar_autofocus = 1
 let g:tagbar_sort = 0
 let g:tagbar_previewwin_pos = 'botright'
+" }}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" syntastic settings
+" syntastic settings {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set statusline+=\ \ %#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
@@ -424,3 +446,13 @@ let g:syntastic_cpp_compiler = 'g++'
 let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++ -Wall'
 let g:syntastic_c_compiler = 'gcc'
 let g:syntastic_c_compiler_options = ' -Wall'
+" }}}
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" MiniBufExplorer settings {{{
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:miniBufExplSplitToEdge = 0
+let g:miniBufExplModSelTarget = 1
+" }}}
+
+" vim:ft=vim:fdm=marker:ff=unix:nowrap:tabstop=4:shiftwidth=4:softtabstop=4:smarttab:shiftround:expandtab
