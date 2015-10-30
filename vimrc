@@ -19,17 +19,19 @@ Plugin 'tomtom/tlib_vim'
 Plugin 'garbas/vim-snipmate'
 Plugin 'honza/vim-snippets'
 
-" Plugin taglist
-Plugin 'taglist.vim'
+Plugin 'majutsushi/tagbar'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/syntastic'
+Plugin 'tpope/vim-rails'
+Plugin 'jiangmiao/auto-pairs' 
+Plugin 'minibufexplorerpp'                    " Manage buffer
+"Plugin 'Valloric/YouCompleteMe'
+"Plugin 'winmanager'                          " Manager windows, combind NERDtree and taglist
 
-" Plugin YouCompleteMe
-"Bundle 'Valloric/YouCompleteMe'
 
-" Manager windows, combind NERDtree and taglist
-"Plugin 'winmanager'
-
-" Manage buffer
-"Plugin 'minibufexplorerpp'
+" Theme
+Plugin 'altercation/vim-colors-solarized'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -187,7 +189,7 @@ set cindent
 "set nowrap
 set wrap
 " Maximum width of text that is being inserted.  A longer line will be broken after white space to get this width.  A zero value disables
-set textwidth=0
+set textwidth=76
 
 " Allow backspace in insert mode
 set backspace=indent,eol,start
@@ -343,8 +345,8 @@ noremap <leader>W :w !sudo tee % > /dev/null<CR>
 nnoremap <leader><CR> :nohlsearch<CR>
 " Toggle NERDTree
 noremap <leader>tr :NERDTreeToggle<CR>
-" Toggle taglist
-noremap <leader>tl :TlistToggle<CR>
+" Toggle tagbar
+noremap <leader>tl :TagbarToggle<CR>
 " Toggle set list
 noremap <leader>ls <ESC>:set invlist<CR>
 " Toggle textwidth
@@ -394,35 +396,12 @@ endif
 let g:solarized_termtrans=1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" taglist settings
+" tagbar settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Only show the current file tag
-"let Tlist_Show_One_File=1
-" Exit vim if taglist window is the last window
-let Tlist_Exit_OnlyWindow=1
-" ctags command path
-"let Tlist_Ctags_Cmd='/usr/local/bin/ctags'
-" Sort tags by name or appearance order
-"let Tlist_Sort_Type='name'
-" taglist appears at the right
-let Tlist_Use_Right_Window=1
-" Show taglist menu in gvim
-let Tlist_Show_Menu=1
-" Open taglist window automatically when open vim
-"let Tlist_Auto_Open=1
-" Close taglist window after select one tag
-"let Tlist_Close_On_Select=1
-" Only show current file tag, the others folded
-let Tlist_File_Fold_Auto_Close=1
-" taglist window gains the focus when TlistToggle
-"let Tlist_GainFocus_On_ToggleOpen=1
-" taglist analysis tags file no matter the taglist window is open or not
-"let Tlist_Process_File_Always=1
-" The height and width of taglist window
-"let Tlist_WinHeight=
-"let Tlist_WinWidth=
-" Show taglist window horizontally
-"let Tlist_Use_Horiz_Window=1
+let g:tagbar_width = 30
+let g:tagbar_zoomwidth = 0
+let g:tagbar_autofocus = 1
+let g:tagbar_sort = 0
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " syntastic settings
@@ -431,7 +410,15 @@ set statusline+=\ \ %#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
+let g:syntastic_stl_format = "[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]"
+let g:syntastic_error_symbol = "✗"
+let g:syntastic_warning_symbol = "⚠"
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+let g:syntastic_loc_list_height = 5
+let g:syntastic_cpp_compiler = 'g++'
+let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++ -Wall'
+let g:syntastic_c_compiler = 'gcc'
+let g:syntastic_c_compiler_options = ' -Wall'

@@ -91,19 +91,20 @@ if [ $REPLY = "Y" ] || [ $REPLY = "y" ]; then
     git clone --depth=1 https://github.com/tpope/vim-pathogen.git ~/.vim/vim-pathogen
     cp ~/.vim/vim-pathogen/autoload/pathogen.vim ~/.vim/autoload/pathogen.vim
     rm -fr ~/.vim/vim-pathogen
-    # Plugin auto-pairs
-    git clone --depth=1 git://github.com/jiangmiao/auto-pairs.git ~/.vim/bundle/auto-pairs
-    # Plugin NERD Tree
-    git clone --depth=1 https://github.com/scrooloose/nerdtree.git ~/.vim/bundle/nerdtree
-    # Plugin NERD commenter
-    git clone --depth=1 https://github.com/scrooloose/nerdcommenter.git ~/.vim/bundle/nerdcommenter
-    # Plugin vim-rails
-    git clone --depth=1 git://github.com/tpope/vim-rails.git ~/.vim/bundle/vim-rails
-    # Plugin syntastic
-    git clone --depth=1 https://github.com/scrooloose/syntastic.git ~/.vim/bundle/syntastic
 
-    # solarized
-    git clone --depth=1 https://github.com/altercation/vim-colors-solarized.git ~/.vim/bundle/vim-colors-solarized
+    # Plugin auto-pairs
+    #git clone --depth=1 git://github.com/jiangmiao/auto-pairs.git ~/.vim/bundle/auto-pairs
+    # Plugin NERD Tree
+    #git clone --depth=1 https://github.com/scrooloose/nerdtree.git ~/.vim/bundle/nerdtree
+    # Plugin NERD commenter
+    #git clone --depth=1 https://github.com/scrooloose/nerdcommenter.git ~/.vim/bundle/nerdcommenter
+    # Plugin vim-rails
+    #git clone --depth=1 git://github.com/tpope/vim-rails.git ~/.vim/bundle/vim-rails
+    # Plugin syntastic
+    #git clone --depth=1 https://github.com/scrooloose/syntastic.git ~/.vim/bundle/syntastic
+    # Theme solarized
+    #git clone --depth=1 https://github.com/altercation/vim-colors-solarized.git ~/.vim/bundle/vim-colors-solarized
+
     # Vundle
     git clone --depth=1 https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
     vim +PluginInstall +qall
