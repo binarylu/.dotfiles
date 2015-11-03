@@ -208,6 +208,8 @@ set number
 " Show “invisible” characters
 set listchars=tab:▸\ ,trail:·,eol:¬,nbsp:_
 "set list
+" fold method
+set fdm=marker
 " }}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

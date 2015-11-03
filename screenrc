@@ -14,7 +14,7 @@ vbell on
 autodetach on # default: on
 
 # restore the screen when vi or less exit
-altscreen off
+altscreen on
 
 hardstatus on
 hardstatus alwayslastline
