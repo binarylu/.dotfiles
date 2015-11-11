@@ -21,15 +21,22 @@ Plugin 'honza/vim-snippets'
 
 Plugin 'majutsushi/tagbar'
 Plugin 'scrooloose/nerdtree'
+Plugin 'Xuyuanp/nerdtree-git-plugin'          " show git status in nerdtree
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-rails'
 Plugin 'jiangmiao/auto-pairs' 
 Plugin 'a.vim'                                " Quickly switch between source files and header files
 Plugin 'minibufexplorerpp'                    " Manage buffer
-"Plugin 'Valloric/YouCompleteMe'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'Valloric/ListToggle'                  " A simple vim plugin for toggling the display of the quickfix list and the location-list
+Plugin 'DrawIt'
+Plugin 'tkhoa2711/vim-togglenumber'
+Plugin 'luochen1990/rainbow'
+Plugin 'tmhedberg/SimpylFold'                 " Fold python code more precise
 "Plugin 'winmanager'                          " Manager windows, combind NERDtree and taglist
 "Plugin 'terryma/vim-multiple-cursors'
+"Plugin 'vim-scripts/loremipsum'              " Placeholder for frontpage development
 
 
 " Theme
@@ -209,7 +216,8 @@ set number
 set listchars=tab:▸\ ,trail:·,eol:¬,nbsp:_
 "set list
 " fold method
-set fdm=marker
+"set fdm=marker
+set foldmethod=indent
 " }}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -339,6 +347,11 @@ if has("autocmd")
     autocmd InsertEnter * se nocul
     " Hightlight the current line after leaving insert mode
     autocmd InsertLeave * se cul
+
+    " Save the fold status
+    au BufWinLeave * silent mkview
+    " Restore the fold status
+    au BufRead * silent loadview
 endif
 " }}}
 
@@ -346,6 +359,8 @@ endif
 " Map {{{
 " Check the key description: :h key-notation
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <space> za
+
 noremap <leader>ss :call StripWhitespace()<CR>
 noremap <leader>cr :call RemoveCR()<CR>
 " Save a file as root (,W)
@@ -362,6 +377,8 @@ noremap <leader>tb :TagbarToggle<CR>
 noremap <leader>ls <ESC>:set invlist<CR>
 " Toggle textwidth
 noremap <leader>tw <ESC>:call Textwidth()<CR>
+noremap <leader>n :ToggleNumber<CR>
+noremap <leader>r :RainbowToggle<CR>
 
 " Move between different Tabs
 "nnoremap <leader>t1 1gt
@@ -420,8 +437,11 @@ let g:solarized_termtrans=1
 " }}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" tagbar settings {{{
+" Plugins {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"------------------------------------
+" tagbar settings {{{
+"------------------------------------
 let g:tagbar_width = 30
 let g:tagbar_zoomwidth = 0
 let g:tagbar_autofocus = 1
@@ -429,10 +449,10 @@ let g:tagbar_sort = 0
 let g:tagbar_previewwin_pos = 'botright'
 " }}}
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"------------------------------------
 " syntastic settings {{{
 " Checkers: shell (http://www.shellcheck.net/about.html)
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"------------------------------------
 set statusline+=\ \ %#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -453,12 +473,78 @@ let g:syntastic_c_compiler = 'gcc'
 let g:syntastic_c_compiler_options = ' -Wall -pedantic-errors'
 " }}}
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"------------------------------------
 " MiniBufExplorer settings {{{
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"------------------------------------
 let g:miniBufExplSplitToEdge = 0
 let g:miniBufExplModSelTarget = 1
 let g:miniBufExplorerMoreThanOne = 3
 " }}}
 
+"------------------------------------
+" Rainbow settings {{{
+" highlight Parentheses
+"------------------------------------
+let g:rainbow_conf = {
+    \   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+    \   'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
+    \   'operators': '_,_',
+    \   'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+    \   'separately': {
+    \       '*': {},
+    \       'tex': {
+    \           'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
+    \       },
+    \       'lisp': {
+    \           'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
+    \       },
+    \       'vim': {
+    \           'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
+    \       },
+    \       'html': {
+    \           'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
+    \       },
+    \       'css': 0,
+    \   }
+    \}
+" }}}
+
+"------------------------------------
+" nerdtree settings {{{
+"------------------------------------
+if has("autocmd")
+    " Close nerdtree windows when all other windows are closed
+    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+endif
+" }}}
+
+"------------------------------------
+" nerdtree-git-plugin settings {{{
+" highlight Parentheses
+"------------------------------------
+if has("autocmd")
+    " Close nerdtree windows when all other windows are closed
+    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+endif
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ "Unknown"   : "?"
+    \ }
+" }}}
+
+"------------------------------------
+" ListToggle settings {{{
+"------------------------------------
+let g:lt_location_list_toggle_map = '<leader>lo'
+let g:lt_quickfix_list_toggle_map = '<leader>qu'
+" }}}
+
+" }}}
 " vim:ft=vim:fdm=marker:ff=unix:nowrap:tabstop=4:shiftwidth=4:softtabstop=4:smarttab:shiftround:expandtab
