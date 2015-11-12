@@ -28,7 +28,7 @@ Plugin 'tpope/vim-rails'
 Plugin 'jiangmiao/auto-pairs' 
 Plugin 'a.vim'                                " Quickly switch between source files and header files
 Plugin 'minibufexplorerpp'                    " Manage buffer
-Plugin 'Valloric/YouCompleteMe'
+"Plugin 'Valloric/YouCompleteMe'
 Plugin 'Valloric/ListToggle'                  " A simple vim plugin for toggling the display of the quickfix list and the location-list
 Plugin 'DrawIt'
 Plugin 'tkhoa2711/vim-togglenumber'
