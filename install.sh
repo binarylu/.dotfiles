@@ -21,25 +21,25 @@ if [ -d "$MYDOT" ]; then
     exit
 fi
 
-ts=`date +%s`
+ts=$(date +%s)
 bakdir=~/.dotfiles.bak.$ts
 
 doIt() {
     filename=~/.$1
-    if [ -f $filename ] || [ -h $filename ]; then
-        [ ! -d $bakdir ] && mkdir -p $bakdir
+    if [ -f "$filename" ] || [ -h "$filename" ]; then
+        [ ! -d "$bakdir" ] && mkdir -p "$bakdir"
         echo "${COLOR_RED}Found ${filename}.${COLOR_RESET} Backing up to ${bakdir}/.${1}.bak.";
-        mv $filename ${bakdir}/.${1}.bak
+        mv "$filename" "${bakdir}/.${1}.bak"
     fi
-    cp -r ${MYDOT}/$1 $filename
+    cp -r "${MYDOT}/$1" "$filename"
 }
 
 install() {
     echo "${COLOR_GREEN}"
     read -p "Install .${1}? (y/n) " -n 1;
     echo "${COLOR_RESET}"
-    if [ $REPLY = "Y" ] || [ $REPLY = "y" ]; then
-        doIt $1
+    if [ "$REPLY" = "Y" ] || [ "$REPLY" = "y" ]; then
+        doIt "$1"
     fi
 }
 
@@ -74,16 +74,19 @@ install gitignore_global
 ## config screen
 install screenrc
 
+## config tmux
+install tmux.conf
+
 ## config vim
 install vimrc
 echo "${COLOR_GREEN}"
 read -p "Install vim plugin? (y/n) " -n 1;
 echo "${COLOR_RESET}"
-if [ $REPLY = "Y" ] || [ $REPLY = "y" ]; then
+if [ "$REPLY" = "Y" ] || [ "$REPLY" = "y" ]; then
     if [ -d ~/.vim ] || [ -h ~/.vim ]; then
-        [ ! -d $bakdir ] && mkdir -p $bakdir
+        [ ! -d "$bakdir" ] && mkdir -p "$bakdir"
         echo "${COLOR_RED}Found ~/.vim.${COLOR_RESET} Backing up to ${bakdir}/.vim.bak.";
-        mv ~/.vim ${bakdir}/.vim.bak
+        mv ~/.vim "${bakdir}/.vim.bak"
     fi
     mkdir -p ~/.vim/autoload
     mkdir -p ~/.vim/bundle
@@ -117,7 +120,7 @@ if [ "$os" = "mac" ]; then
     echo "${COLOR_GREEN}"
     read -p "Your OS is Mac OS, need to config webserver? (y/n) " -n 1;
     echo "${COLOR_RESET}"
-    if [ $REPLY = "Y" ] || [ $REPLY = "y" ]; then
+    if [ "$REPLY" = "Y" ] || [ "$REPLY" = "y" ]; then
         bash ${MYDOT}/apache_for_yosemite.sh
     fi
 fi
