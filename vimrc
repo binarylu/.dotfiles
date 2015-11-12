@@ -37,6 +37,7 @@ Plugin 'tmhedberg/SimpylFold'                 " Fold python code more precise
 "Plugin 'winmanager'                          " Manager windows, combind NERDtree and taglist
 "Plugin 'terryma/vim-multiple-cursors'
 "Plugin 'vim-scripts/loremipsum'              " Placeholder for frontpage development
+Plugin 'benmills/vimux'                       " make interacting with tmux from vim effortless
 
 
 " Theme
