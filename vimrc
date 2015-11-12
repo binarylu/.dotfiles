@@ -145,7 +145,7 @@ set fencs=utf-8,ucs-bom,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 " Set vim available to read binary file. You can also use the -b Vim argument.
 set binary
 " Don’t add empty newlines at the end of files
-set noeol
+"set noeol
 " When open binary files, display the values by hex
 set display=uhex
 " Respect modeline in files.
