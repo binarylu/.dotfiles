@@ -38,6 +38,7 @@ Plugin 'tmhedberg/SimpylFold'                 " Fold python code more precise
 "Plugin 'terryma/vim-multiple-cursors'
 "Plugin 'vim-scripts/loremipsum'              " Placeholder for frontpage development
 Plugin 'benmills/vimux'                       " make interacting with tmux from vim effortless
+Plugin 'airblade/vim-gitgutter'               " shows a git diff in the 'gutter' (sign column).
 
 
 " Theme
@@ -551,6 +552,12 @@ let g:NERDTreeIndicatorMapCustom = {
 "------------------------------------
 let g:lt_location_list_toggle_map = '<leader>lo'
 let g:lt_quickfix_list_toggle_map = '<leader>qu'
+" }}}
+
+"------------------------------------
+" GitGutter settings {{{
+"------------------------------------
+let g:gitgutter_realtime = 1000
 " }}}
 
 " }}}
