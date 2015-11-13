@@ -354,9 +354,11 @@ if has("autocmd")
     autocmd InsertLeave * se cul
 
     " Save the file status of fold, cursor, see: help viewoptions
-    au BufWinLeave * silent mkview
+    " Use '?*' instead of '*', so that open vim without a filename will not
+    " generate error messages.
+    au BufWinLeave ?* silent mkview
     " Restore the file status
-    au BufRead * silent loadview
+    au BufRead ?* silent loadview
 endif
 " }}}
 
