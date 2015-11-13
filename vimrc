@@ -93,7 +93,7 @@ set secure
 " Allow specified keys that move the cursor left/right to move to the previous/next line when the cursor is on the first/last character in the line.
 set whichwrap =b,s,<,>,[,]
 " make backspace work like most other apps
-set backspace=2 "或者 set backspace=indent,eol,start
+set backspace=2 "or set backspace=indent,eol,start
 " Don’t show the intro message when starting Vim
 "set shortmess=atI
 " Centralize backups, swapfiles and undo history
@@ -104,6 +104,9 @@ set backspace=2 "或者 set backspace=indent,eol,start
 "endif
 " Don’t create backups when editing files in certain directories
 set backupskip=/tmp/*,/private/tmp/*
+" By default, 'options' is included, which will cause error when use both
+" mvim and vim, some options may not be found.
+set viewoptions-=options
 
 " set status line
 set laststatus=2
@@ -328,11 +331,12 @@ if has("autocmd")
         au BufReadPost * set relativenumber
     endif
 
-    " When editing a file, always jump to the last cursor position
-    autocmd BufReadPost *
-    \ if line("'\"") > 0 && line ("'\"") <= line("$") |
-    \   exe "normal! g'\"" |
-    \ endif
+    "<< legacy: mkview can do the same thing and better. >>"
+    "" When editing a file, always jump to the last cursor position
+    "autocmd BufReadPost *
+    "\ if line("'\"") > 0 && line ("'\"") <= line("$") |
+    "\   exe "normal! g'\"" |
+    "\ endif
 
     " Enable file type detection
     filetype on
@@ -349,9 +353,9 @@ if has("autocmd")
     " Hightlight the current line after leaving insert mode
     autocmd InsertLeave * se cul
 
-    " Save the fold status
+    " Save the file status of fold, cursor, see: help viewoptions
     au BufWinLeave * silent mkview
-    " Restore the fold status
+    " Restore the file status
     au BufRead * silent loadview
 endif
 " }}}
@@ -461,17 +465,17 @@ set statusline+=%*
 let g:syntastic_stl_format = "[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]"
 let g:syntastic_error_symbol = "✗"
 let g:syntastic_warning_symbol = "⚠"
-let g:syntastic_style_error_symbol = 'S✗'
-let g:syntastic_style_warning_symbol = 'S!'
+let g:syntastic_style_error_symbol = "S>"
+let g:syntastic_style_warning_symbol = "S!"
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_loc_list_height = 5
-let g:syntastic_cpp_compiler = 'g++'
-let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++ -Wall'
-let g:syntastic_c_compiler = 'gcc'
-let g:syntastic_c_compiler_options = ' -Wall -pedantic-errors'
+let g:syntastic_cpp_compiler = "g++"
+let g:syntastic_cpp_compiler_options = " -std=c++11 -stdlib=libc++ -Wall"
+let g:syntastic_c_compiler = "gcc"
+let g:syntastic_c_compiler_options = " -Wall -pedantic-errors"
 " }}}
 
 "------------------------------------
@@ -548,4 +552,5 @@ let g:lt_quickfix_list_toggle_map = '<leader>qu'
 " }}}
 
 " }}}
+
 " vim:ft=vim:fdm=marker:ff=unix:nowrap:tabstop=4:shiftwidth=4:softtabstop=4:smarttab:shiftround:expandtab
