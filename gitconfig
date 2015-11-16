@@ -1,17 +1,22 @@
 [filter "media"]
-    required = true
-    clean = git media clean %f
-    smudge = git media smudge %f
+	required = true
+	clean = git media clean %f
+	smudge = git media smudge %f
 [core]
-    excludesfile = ~/.gitignore_global
-    editor = vim
+	excludesfile = ~/.gitignore_global
+	editor = vim
 
-    # true:  convert to LF when committing and convert CRLF when pulling
-    # input: convert to LF when committing and do not convert when pulling
-    # false: do not convert when committing and pulling
-    # autocrlf = input 
+	# true:  convert to LF when committing and convert CRLF when pulling
+	# input: convert to LF when committing and do not convert when pulling
+	# false: do not convert when committing and pulling
+	# autocrlf = input 
 [alias]
-    st = status
-    ci = commit
-    co = checkout
-    lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	st = status
+	ci = commit
+	co = checkout
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	d = difftool
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
