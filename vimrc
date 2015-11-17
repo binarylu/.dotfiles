@@ -351,8 +351,12 @@ if has("autocmd")
 
     " Do not hightlight the current line when entering insert mode
     autocmd InsertEnter * se nocul
+    " Do not hightlight the current line when leave the current window
+    autocmd WinLeave * se nocul
     " Hightlight the current line after leaving insert mode
     autocmd InsertLeave * se cul
+    " Hightlight the current line after entering a new window
+    autocmd WinEnter * se cul
 
     " Save the file status of fold, cursor, see: help viewoptions
     " Use '?*' instead of '*', so that open vim without a filename will not
