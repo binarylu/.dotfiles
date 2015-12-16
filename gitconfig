@@ -2,6 +2,10 @@
 	required = true
 	clean = git media clean %f
 	smudge = git media smudge %f
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
 [core]
 	excludesfile = ~/.gitignore_global
 	editor = vim
@@ -20,3 +24,5 @@
 	tool = vimdiff
 [difftool]
 	prompt = false
+[push]
+	default = simple
