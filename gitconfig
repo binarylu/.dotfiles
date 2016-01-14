@@ -13,14 +13,14 @@
 	# true:  convert to LF when committing and convert CRLF when pulling
 	# input: convert to LF when committing and do not convert when pulling
 	# false: do not convert when committing and pulling
-	# autocrlf = input 
+	# autocrlf = input
 [alias]
 	st = status
 	ci = commit
 	co = checkout
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>(%ae)%Creset' --abbrev-commit
 	d = difftool
-    m = mergetool
+	m = mergetool
 [diff]
 	tool = vimdiff
 [difftool]
