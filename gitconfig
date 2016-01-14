@@ -20,9 +20,15 @@
 	co = checkout
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>(%ae)%Creset' --abbrev-commit
 	d = difftool
+    m = mergetool
 [diff]
 	tool = vimdiff
 [difftool]
+	prompt = false
+[merge]
+	tool = vimdiff
+	conflictstyle = diff3
+[mergetool]
 	prompt = false
 [push]
 	default = simple
