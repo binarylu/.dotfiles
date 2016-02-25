@@ -265,7 +265,7 @@ function! Textwidth()
 endfunction
 
 function! SetTab()
-    if &filetype == "ruby" || &filetype == "eruby"
+    if &filetype == "ruby" || &filetype == "eruby" || &filetype == "html"
         " Make tabs as wide as two spaces
         set tabstop=2
         " Number of spaces to use for each step of (auto)indent.  Used for |'cindent'|, |>>|, |<<|, etc.
