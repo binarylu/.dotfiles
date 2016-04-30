@@ -76,6 +76,18 @@ install screenrc
 
 ## config tmux
 install tmux.conf
+echo "${COLOR_GREEN}"
+read -p "Install tmux plugin? (y/n) " -n 1;
+echo "${COLOR_RESET}"
+if [ "$REPLY" = "Y" ] || [ "$REPLY" = "y" ]; then
+    if [ -d ~/.tmux ] || [ -h ~/.tmux ]; then
+        [ ! -d "$bakdir" ] && mkdir -p "$bakdir"
+        echo "${COLOR_RED}Found ~/.tmux.${COLOR_RESET} Backing up to ${bakdir}/.tmux.bak.";
+        mv ~/.tmux "${bakdir}/.tmux.bak"
+    fi
+    mkdir -p ~/.tmux
+    git clone --depth=1 https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+fi
 
 ## config vim
 install vimrc
