@@ -87,6 +87,7 @@ if [ "$REPLY" = "Y" ] || [ "$REPLY" = "y" ]; then
     fi
     mkdir -p ~/.tmux
     git clone --depth=1 https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    echo "Press prefix + I in tmux to install plugins."
 fi
 
 ## config vim
