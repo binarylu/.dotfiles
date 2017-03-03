@@ -19,7 +19,7 @@
 	ci = commit
 	co = checkout
 	br = branch
-	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>(%ae)%Creset' --abbrev-commit
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>(%ae)[%G?]%Creset' --abbrev-commit
 	d = difftool
 	m = mergetool
 [diff]
