@@ -25,6 +25,7 @@ Plugin 'Xuyuanp/nerdtree-git-plugin'          " show git status in nerdtree
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-rails'
+Plugin 'leafgarland/typescript-vim'
 Plugin 'jiangmiao/auto-pairs' 
 Plugin 'a.vim'                                " Quickly switch between source files and header files
 Plugin 'minibufexplorerpp'                    " Manage buffer
@@ -240,7 +241,8 @@ endfunction
 function! RemoveCR()
     let save_cursor = getpos(".")
     let old_query = getreg('/')
-    :%s///e
+    :%s/
+//e
     call setpos('.', save_cursor)
     call setreg('/', old_query)
 endfunction
