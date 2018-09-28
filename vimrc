@@ -173,6 +173,8 @@ set pastetoggle=<F9>
 set hlsearch
 " Ignore case of searches
 set ignorecase
+" Make search case sensitive when search content contains upper case
+set smartcase
 " Highlight dynamically as pattern is typed
 set incsearch
 " When searching by regex, add '\' except '$ . * ^'
@@ -241,8 +243,7 @@ endfunction
 function! RemoveCR()
     let save_cursor = getpos(".")
     let old_query = getreg('/')
-    :%s/
-//e
+    :%s///e
     call setpos('.', save_cursor)
     call setreg('/', old_query)
 endfunction
