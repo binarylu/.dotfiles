@@ -1,35 +1,37 @@
 [filter "media"]
-	required = true
-	clean = git media clean %f
-	smudge = git media smudge %f
+    required = true
+    clean = git media clean %f
+    smudge = git media smudge %f
 [filter "lfs"]
-	required = true
-	clean = git-lfs clean %f
-	smudge = git-lfs smudge %f
+    required = true
+    clean = git-lfs clean %f
+    smudge = git-lfs smudge %f
 [core]
-	excludesfile = ~/.gitignore_global
-	editor = vim
+    excludesfile = ~/.gitignore_global
+    editor = vim
 
-	# true:  convert to LF when committing and convert CRLF when pulling
-	# input: convert to LF when committing and do not convert when pulling
-	# false: do not convert when committing and pulling
-	# autocrlf = input
+    # true:  convert to LF when committing and convert CRLF when pulling
+    # input: convert to LF when committing and do not convert when pulling
+    # false: do not convert when committing and pulling
+    # autocrlf = input
 [alias]
-	st = status
-	ci = commit
-	co = checkout
-	br = branch
-	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>(%ae)[%G?]%Creset' --abbrev-commit
-	d = difftool
-	m = mergetool
+    st = status
+    ci = commit
+    co = checkout
+    br = branch
+    lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>(%ae)[%G?]%Creset' --abbrev-commit
+    d = difftool
+    m = mergetool
 [diff]
-	tool = vimdiff
+    tool = vimdiff
 [difftool]
-	prompt = false
+    prompt = false
 [merge]
-	tool = vimdiff
-	conflictstyle = diff3
+    tool = vimdiff
+    conflictstyle = diff3
 [mergetool]
-	prompt = false
+    prompt = false
 [push]
-	default = simple
+    default = simple
+[color]
+    ui = auto
