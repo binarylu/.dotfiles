@@ -243,7 +243,8 @@ endfunction
 function! RemoveCR()
     let save_cursor = getpos(".")
     let old_query = getreg('/')
-    :%s///e
+    :%s/
+//e
     call setpos('.', save_cursor)
     call setreg('/', old_query)
 endfunction
@@ -541,7 +542,7 @@ if has("autocmd")
     " Close nerdtree windows when all other windows are closed
     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 endif
-let g:NERDTreeIndicatorMapCustom = {
+let g:NERDTreeGitStatusIndicatorMapCustom = {
     \ "Modified"  : "✹",
     \ "Staged"    : "✚",
     \ "Untracked" : "✭",
