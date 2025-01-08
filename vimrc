@@ -1,76 +1,63 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" For Vundle {{{
+" Plugins {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set nocompatible              " be iMproved, required
-filetype off                  " required
+" Automatic installation of vim-plug
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
+call plug#begin()
+" The default plugin directory will be as follows:
+"   - Vim (Linux/macOS): '~/.vim/plugged'
+"   - Vim (Windows): '~/vimfiles/plugged'
+"   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
+" You can specify a custom plugin directory by passing it as the argument
+"   - e.g. `call plug#begin('~/.vim/plugged')`
+"   - Avoid using standard Vim directory names like 'plugin'
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+" Make sure you use single quotes
+
+Plug 'tpope/vim-sensible'
 
 " Plugin snipmate and its dependencies
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
-Plugin 'garbas/vim-snipmate'
-Plugin 'honza/vim-snippets'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'tomtom/tlib_vim'
+Plug 'garbas/vim-snipmate'
+Plug 'honza/vim-snippets'
 
-Plugin 'majutsushi/tagbar'
-Plugin 'scrooloose/nerdtree'
-Plugin 'Xuyuanp/nerdtree-git-plugin'          " show git status in nerdtree
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'scrooloose/syntastic'
-Plugin 'tpope/vim-rails'
-Plugin 'leafgarland/typescript-vim'
-Plugin 'jiangmiao/auto-pairs' 
-Plugin 'a.vim'                                " Quickly switch between source files and header files
-Plugin 'minibufexplorerpp'                    " Manage buffer
-"Plugin 'Valloric/YouCompleteMe'
-Plugin 'Valloric/ListToggle'                  " A simple vim plugin for toggling the display of the quickfix list and the location-list
-Plugin 'DrawIt'
-Plugin 'tkhoa2711/vim-togglenumber'
-Plugin 'luochen1990/rainbow'
-Plugin 'tmhedberg/SimpylFold'                 " Fold python code more precise
-"Plugin 'winmanager'                          " Manager windows, combind NERDtree and taglist
-"Plugin 'terryma/vim-multiple-cursors'
-"Plugin 'vim-scripts/loremipsum'              " Placeholder for frontpage development
-"Plugin 'benmills/vimux'                       " make interacting with tmux from vim effortless
-Plugin 'airblade/vim-gitgutter'               " shows a git diff in the 'gutter' (sign column).
-
+Plug 'majutsushi/tagbar'
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'          " show git status in nerdtree
+Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/syntastic'
+Plug 'tpope/vim-rails'
+Plug 'leafgarland/typescript-vim'
+Plug 'jiangmiao/auto-pairs' 
+Plug 'vim-scripts/a.vim'                                " Quickly switch between source files and header files
+Plug 'vim-scripts/minibufexplorerpp'                    " Manage buffer
+"Plug 'Valloric/YouCompleteMe'
+Plug 'Valloric/ListToggle'                  " A simple vim plugin for toggling the display of the quickfix list and the location-list
+Plug 'vim-scripts/DrawIt'
+Plug 'tkhoa2711/vim-togglenumber'
+Plug 'luochen1990/rainbow'
+Plug 'tmhedberg/SimpylFold'                 " Fold python code more precise
+"Plug 'winmanager'                          " Manager windows, combind NERDtree and taglist
+"Plug 'terryma/vim-multiple-cursors'
+"Plug 'vim-scripts/loremipsum'              " Placeholder for frontpage development
+"Plug 'benmills/vimux'                       " make interacting with tmux from vim effortless
+Plug 'airblade/vim-gitgutter'               " shows a git diff in the 'gutter' (sign column).
 
 " Theme
-"Plugin 'altercation/vim-colors-solarized'
+"Plug 'altercation/vim-colors-solarized'
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
+" plug#end() automatically executes filetype plugin indent on and syntax enable
+call plug#end()
 " }}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" For pathogen {{{
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-execute pathogen#infect()
-syntax on
-filetype plugin indent on
-" }}}
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" For General Settings {{{
+" General Settings {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Enable syntax highlighting
 syntax on
@@ -345,10 +332,6 @@ if has("autocmd")
 
     " Enable file type detection
     filetype on
-    " Treat .json files as .js
-    autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
-    " Treat .md files as Markdown
-    autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
     autocmd BufNewFile *.py,*.sh,*.c,*.cc,*.cpp exec ":call SetTitle()"
     " Set Tab format depends on file types
     autocmd BufNewFile,BufRead * exec ":call SetTab()"
