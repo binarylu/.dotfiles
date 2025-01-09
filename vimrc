@@ -20,6 +20,7 @@ call plug#begin()
 " Make sure you use single quotes
 
 Plug 'tpope/vim-sensible'
+Plug 'vim-scripts/restore_view.vim'     " automatically save and restore view
 
 " Plugin snipmate and its dependencies
 Plug 'MarcWeber/vim-addon-mw-utils'
@@ -344,13 +345,6 @@ if has("autocmd")
     autocmd InsertLeave * se cul
     " Hightlight the current line after entering a new window
     autocmd WinEnter * se cul
-
-    " Save the file status of fold, cursor, see: help viewoptions
-    " Use '?*' instead of '*', so that open vim without a filename will not
-    " generate error messages.
-    au BufWinLeave ?* silent mkview
-    " Restore the file status
-    au BufRead ?* silent loadview
 endif
 " }}}
 
