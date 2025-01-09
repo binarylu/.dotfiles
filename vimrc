@@ -211,6 +211,7 @@ set backspace=indent,eol,start
 " Enhance command-line completion
 set wildmenu
 " Enable relative line numbers
+set number
 set relativenumber
 " Highlight current line
 "set cursorline
