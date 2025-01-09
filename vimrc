@@ -206,8 +206,8 @@ set backspace=indent,eol,start
 "set scrolloff=3
 " Enhance command-line completion
 set wildmenu
-" Enable line numbers
-set number
+" Enable relative line numbers
+set relativenumber
 " Highlight current line
 "set cursorline
 " Show “invisible” characters
@@ -320,12 +320,6 @@ endfunc
 " autocmd {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has("autocmd")
-    " Use relative line numbers
-    if exists("&relativenumber")
-        set relativenumber
-        au BufReadPost * set relativenumber
-    endif
-
     "<< legacy: mkview can do the same thing and better. >>"
     "" When editing a file, always jump to the last cursor position
     "autocmd BufReadPost *
