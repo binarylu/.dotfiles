@@ -320,13 +320,6 @@ endfunc
 " autocmd {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has("autocmd")
-    "<< legacy: mkview can do the same thing and better. >>"
-    "" When editing a file, always jump to the last cursor position
-    "autocmd BufReadPost *
-    "\ if line("'\"") > 0 && line ("'\"") <= line("$") |
-    "\   exe "normal! g'\"" |
-    "\ endif
-
     " Enable file type detection
     filetype on
     autocmd BufNewFile *.py,*.sh,*.c,*.cc,*.cpp exec ":call SetTitle()"
