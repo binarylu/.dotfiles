@@ -138,10 +138,10 @@ set ruler
 set title
 
 " Use UTF-8 without BOM, used inside Vim
-"set encoding=utf-8 nobomb
+set encoding=utf-8 nobomb
 " Sets the character encoding for the file of this buffer
-"set fenc=utf-8
-"set fencs=utf-8,ucs-bom,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+set fenc=utf-8
+set fencs=utf-8,ucs-bom,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 " Set vim available to read binary file. You can also use the -b Vim argument.
 "set binary
 " Don't add empty newlines at the end of files
