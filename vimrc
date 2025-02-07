@@ -90,7 +90,7 @@ set secure
 set whichwrap =b,s,<,>,[,]
 " make backspace work like most other apps
 set backspace=2 "or set backspace=indent,eol,start
-" Don’t show the intro message when starting Vim
+" Don't show the intro message when starting Vim
 "set shortmess=atI
 " Centralize backups, swapfiles and undo history
 "set backupdir=~/.vim/backups
@@ -98,7 +98,7 @@ set backspace=2 "or set backspace=indent,eol,start
 "if exists("&undodir")
 "    set undodir=~/.vim/undo
 "endif
-" Don’t create backups when editing files in certain directories
+" Don't create backups when editing files in certain directories
 set backupskip=/tmp/*,/private/tmp/*
 " By default, 'options' is included, which will cause error when use both
 " mvim and vim, some options may not be found.
@@ -123,9 +123,9 @@ set statusline+=%=
 set statusline+=0x%-8B\
 set statusline+=%-14.(%l,%c%V%)\ %<%P
 
-" Don’t reset cursor to start of line when moving around.
+" Don't reset cursor to start of line when moving around.
 set nostartofline
-" Show the (partial) command as it’s being typed
+" Show the (partial) command as it's being typed
 set showcmd
 " Show the current mode
 set showmode
@@ -144,7 +144,7 @@ set title
 "set fencs=utf-8,ucs-bom,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 " Set vim available to read binary file. You can also use the -b Vim argument.
 "set binary
-" Don’t add empty newlines at the end of files
+" Don't add empty newlines at the end of files
 "set noeol
 " When open binary files, display the values by hex
 set display=uhex
@@ -215,7 +215,7 @@ set number
 set relativenumber
 " Highlight current line
 "set cursorline
-" Show “invisible” characters
+" Show invisible characters
 set listchars=tab:▸\ ,trail:·,eol:¬,nbsp:_
 "set list
 " fold method
@@ -417,7 +417,7 @@ endif
 "colorscheme solarized
 
 " If you use a terminal emulator with a transparent background and Solarized
-" isn’t displaying the background color transparently, set this to 1 and
+" isn't displaying the background color transparently, set this to 1 and
 " Solarized will use the default (transparent) background of the terminal
 " emulator. urxvt required this in my testing; iTerm2 did not.
 let g:solarized_termtrans=1
