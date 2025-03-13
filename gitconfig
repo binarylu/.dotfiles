@@ -24,6 +24,9 @@
     d2 = difftool --tool=bc --dir-diff
     m = mergetool
     m2 = mergetool --tool=bc
+[pager]
+    diff = false
+    branch = false
 [diff]
     tool = vimdiff
 [difftool]
