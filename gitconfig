@@ -21,17 +21,26 @@
     br = branch
     lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>(%ae)[%G?]%Creset' --abbrev-commit
     d = difftool
+    d2 = difftool --tool=bc --dir-diff
     m = mergetool
+    m2 = mergetool --tool=bc
 [diff]
     tool = vimdiff
 [difftool]
     prompt = false
+[difftool "bc"]
+    trustExitCode = true
 [merge]
     tool = vimdiff
     conflictstyle = diff3
 [mergetool]
     prompt = false
+[mergetool "bc"]
+    trustExitCode = true
 [push]
     default = simple
 [color]
     ui = auto
+#[user]
+#    name = 
+#    email = 
