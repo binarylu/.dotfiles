@@ -7,7 +7,7 @@
     clean = git-lfs clean %f
     smudge = git-lfs smudge %f
 [core]
-    excludesfile = ~/.gitignore_global
+    # git >= 1.7.12 auto-reads ~/.config/git/ignore via XDG — no excludesfile needed.
     editor = vim
 
     # true:  convert to LF when committing and convert CRLF when pulling
