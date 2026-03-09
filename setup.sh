@@ -128,6 +128,7 @@ setup_tmux() {
     if version_ge "$ver" "3.1"; then
         info "tmux >= 3.1: linking into ${XDG_CONFIG_HOME}/tmux/"
         backup_if_needed "${HOME}/.tmux.conf"
+        backup_if_needed "${HOME}/.tmux"
         tmux_dir="${XDG_CONFIG_HOME}/tmux"
     else
         info "tmux < 3.1: linking to ~/.tmux/"
@@ -149,6 +150,8 @@ setup_vim() {
     if [ "$xdg_support" = "1" ]; then
         info "patch 9.1.0327 present — linking into ${XDG_CONFIG_HOME}/vim/"
         backup_if_needed "${HOME}/.vimrc"
+        backup_if_needed "${HOME}/.vim"
+        backup_if_needed "${HOME}/.viminfo"
         make_link "${DOTFILES_DIR}/vim/vimrc" "${XDG_CONFIG_HOME}/vim/vimrc"
     else
         warn "patch 9.1.0327 not present — linking to ~/.vimrc"
