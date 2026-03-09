@@ -41,7 +41,7 @@ backup_if_needed() {
         dest="$(readlink "$target")"
         [[ "$dest" == "$DOTFILES_DIR"* ]] && return 0
     fi
-    local backup="${target}.old"
+    local backup="${target}.$(date +%Y%m%d_%H%M%S).old"
     warn "Found existing ${target} — renaming to ${backup}"
     mv "$target" "$backup"
 }
@@ -75,8 +75,25 @@ setup_git() {
     info "git $ver"
     if version_ge "$ver" "1.7.12"; then
         info "git >= 1.7.12: linking into ${XDG_CONFIG_HOME}/git/"
+        backup_if_needed "${HOME}/.gitconfig"
+        backup_if_needed "${HOME}/.gitignore_global"
         make_link "${DOTFILES_DIR}/git/config" "${XDG_CONFIG_HOME}/git/config"
         make_link "${DOTFILES_DIR}/git/ignore" "${XDG_CONFIG_HOME}/git/ignore"
+        local local_config="${XDG_CONFIG_HOME}/git/local"
+        if [ ! -f "$local_config" ]; then
+            cat > "$local_config" <<'EOF'
+# Local git config — not tracked in dotfiles repo.
+# Set your identity here:
+[user]
+    name =
+    email =
+
+# Example: per-directory identity override
+#[includeIf "gitdir:~/work/"]
+#    path = ~/.config/git/work
+EOF
+            warn "Created ${local_config} — fill in your name and email."
+        fi
     else
         warn "git $ver is too old (XDG support requires >= 1.7.12) — skipping."
     fi
@@ -110,6 +127,7 @@ setup_tmux() {
     info "tmux $ver"
     if version_ge "$ver" "3.1"; then
         info "tmux >= 3.1: linking into ${XDG_CONFIG_HOME}/tmux/"
+        backup_if_needed "${HOME}/.tmux.conf"
         tmux_dir="${XDG_CONFIG_HOME}/tmux"
     else
         info "tmux < 3.1: linking to ~/.tmux/"
@@ -134,6 +152,7 @@ setup_vim() {
     # XDG support added in 9.1.0327: reads $XDG_CONFIG_HOME/vim/vimrc
     if version_ge "${ver}.${patch}" "9.1.0327"; then
         info "vim >= 9.1.0327: linking into ${XDG_CONFIG_HOME}/vim/"
+        backup_if_needed "${HOME}/.vimrc"
         make_link "${DOTFILES_DIR}/vim/vimrc" "${XDG_CONFIG_HOME}/vim/vimrc"
     else
         warn "vim ${ver} patch ${patch} is too old (XDG support requires >= 9.1.0327) — linking to ~/.vimrc"

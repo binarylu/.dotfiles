@@ -46,6 +46,5 @@
     ff = only
 [color]
     ui = auto
-#[user]
-#    name = 
-#    email = 
+[include]
+    path = ~/.config/git/local
