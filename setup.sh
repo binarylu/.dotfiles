@@ -101,17 +101,15 @@ EOF
 
 install_tpm() {
     local tpm_dir="$1/plugins/tpm"
-    if [ -d "$tpm_dir" ]; then
-        info "TPM already installed at $tpm_dir"
-        return
-    fi
     if ! command -v git >/dev/null 2>&1; then
         warn "git not available — TPM not installed. Clone manually:"
         warn "  git clone https://github.com/tmux-plugins/tpm $tpm_dir"
         return
     fi
-    info "Cloning TPM into $tpm_dir..."
-    git clone --depth=1 https://github.com/tmux-plugins/tpm "$tpm_dir"
+    if [ ! -d "$tpm_dir" ]; then
+        info "Cloning TPM into $tpm_dir..."
+        git clone --depth=1 https://github.com/tmux-plugins/tpm "$tpm_dir"
+    fi
     info "Installing tmux plugins..."
     "$tpm_dir/bin/install_plugins"
     success "Tmux plugins installed."
