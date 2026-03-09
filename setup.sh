@@ -74,7 +74,7 @@ setup_git() {
     ver="$(git --version | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1)"
     info "git $ver"
     if version_ge "$ver" "1.7.12"; then
-        info "git >= 1.7.12: linking into ${XDG_CONFIG_HOME}/git/"
+        info "Linking into ${XDG_CONFIG_HOME}/git/"
         backup_if_needed "${HOME}/.gitconfig"
         backup_if_needed "${HOME}/.gitignore_global"
         make_link "${DOTFILES_DIR}/git/config" "${XDG_CONFIG_HOME}/git/config"
@@ -125,17 +125,15 @@ setup_tmux() {
     local ver tmux_dir
     ver="$(tmux -V | grep -oE '[0-9]+\.[0-9]+([a-z]?)' | head -1)"
     info "tmux $ver"
-    if version_ge "$ver" "3.1"; then
-        info "tmux >= 3.1: linking into ${XDG_CONFIG_HOME}/tmux/"
+    if version_ge "$ver" "3.2"; then
+        info "Linking into ${XDG_CONFIG_HOME}/tmux/"
         backup_if_needed "${HOME}/.tmux.conf"
         backup_if_needed "${HOME}/.tmux"
-        tmux_dir="${XDG_CONFIG_HOME}/tmux"
+        make_link "${DOTFILES_DIR}/tmux/tmux.conf" "${XDG_CONFIG_HOME}/tmux/tmux.conf"
+        install_tpm "${XDG_CONFIG_HOME}/tmux"
     else
-        info "tmux < 3.1: linking to ~/.tmux/"
-        tmux_dir="${HOME}/.tmux"
+        warn "tmux $ver is too old (XDG and #{current_file} require >= 3.2) — skipping."
     fi
-    make_link "${DOTFILES_DIR}/tmux/tmux.conf" "${tmux_dir}/tmux.conf"
-    install_tpm "$tmux_dir"
 }
 
 setup_vim() {
@@ -148,7 +146,7 @@ setup_vim() {
     xdg_support="$(vim --clean -es +':exec "! echo" has("patch-9.1.0327")' +:q 2>/dev/null)"
     info "vim $ver"
     if [ "$xdg_support" = "1" ]; then
-        info "patch 9.1.0327 present — linking into ${XDG_CONFIG_HOME}/vim/"
+        info "Linking into ${XDG_CONFIG_HOME}/vim/"
         backup_if_needed "${HOME}/.vimrc"
         backup_if_needed "${HOME}/.vim"
         backup_if_needed "${HOME}/.viminfo"
