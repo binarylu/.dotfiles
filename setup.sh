@@ -142,20 +142,16 @@ setup_vim() {
         warn "vim not found — skipping."
         return
     fi
-    local ver patch
-    # vim --version first line: "VIM - Vi IMproved 9.1 (2024 Jan 02, compiled ...)"
+    local ver xdg_support
     ver="$(vim --version | head -1 | grep -oE '[0-9]+\.[0-9]+' | head -1)"
-    # patch level is on the line "Included patches: 1-NNNN"
-    patch="$(vim --version | grep -oE 'Included patches: [0-9]+-([0-9]+)' | grep -oE '[0-9]+$')"
-    patch="${patch:-0}"
-    info "vim ${ver} patch ${patch}"
-    # XDG support added in 9.1.0327: reads $XDG_CONFIG_HOME/vim/vimrc
-    if version_ge "${ver}.${patch}" "9.1.0327"; then
-        info "vim >= 9.1.0327: linking into ${XDG_CONFIG_HOME}/vim/"
+    xdg_support="$(vim --clean -es +':exec "! echo" has("patch-9.1.0327")' +:q 2>/dev/null)"
+    info "vim $ver"
+    if [ "$xdg_support" = "1" ]; then
+        info "patch 9.1.0327 present — linking into ${XDG_CONFIG_HOME}/vim/"
         backup_if_needed "${HOME}/.vimrc"
         make_link "${DOTFILES_DIR}/vim/vimrc" "${XDG_CONFIG_HOME}/vim/vimrc"
     else
-        warn "vim ${ver} patch ${patch} is too old (XDG support requires >= 9.1.0327) — linking to ~/.vimrc"
+        warn "patch 9.1.0327 not present — linking to ~/.vimrc"
         make_link "${DOTFILES_DIR}/vim/vimrc" "${HOME}/.vimrc"
     fi
 }
