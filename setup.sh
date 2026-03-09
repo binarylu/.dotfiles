@@ -82,45 +82,41 @@ setup_git() {
     fi
 }
 
+install_tpm() {
+    local tpm_dir="$1/plugins/tpm"
+    if [ -d "$tpm_dir" ]; then
+        info "TPM already installed at $tpm_dir"
+        return
+    fi
+    if ! command -v git >/dev/null 2>&1; then
+        warn "git not available — TPM not installed. Clone manually:"
+        warn "  git clone https://github.com/tmux-plugins/tpm $tpm_dir"
+        return
+    fi
+    info "Cloning TPM into $tpm_dir..."
+    git clone --depth=1 https://github.com/tmux-plugins/tpm "$tpm_dir"
+    info "Installing tmux plugins..."
+    "$tpm_dir/bin/install_plugins"
+    success "Tmux plugins installed."
+}
+
 setup_tmux() {
     if ! command -v tmux >/dev/null 2>&1; then
         warn "tmux not found — skipping."
         return
     fi
-    local ver
+    local ver tmux_dir
     ver="$(tmux -V | grep -oE '[0-9]+\.[0-9]+([a-z]?)' | head -1)"
     info "tmux $ver"
     if version_ge "$ver" "3.1"; then
         info "tmux >= 3.1: linking into ${XDG_CONFIG_HOME}/tmux/"
-        make_link "${DOTFILES_DIR}/tmux/tmux.conf" "${XDG_CONFIG_HOME}/tmux/tmux.conf"
-        info "TPM will be installed at ${XDG_CONFIG_HOME}/tmux/plugins/tpm"
-        if [ ! -d "${XDG_CONFIG_HOME}/tmux/plugins/tpm" ]; then
-            if command -v git >/dev/null 2>&1; then
-                info "Cloning TPM..."
-                git clone --depth=1 https://github.com/tmux-plugins/tpm \
-                    "${XDG_CONFIG_HOME}/tmux/plugins/tpm"
-                info "Press prefix + I inside tmux to install plugins."
-            else
-                warn "git not available — TPM not installed. Clone manually:"
-                warn "  git clone https://github.com/tmux-plugins/tpm ${XDG_CONFIG_HOME}/tmux/plugins/tpm"
-            fi
-        fi
+        tmux_dir="${XDG_CONFIG_HOME}/tmux"
     else
-        info "tmux < 3.1: linking to ~/.tmux.conf"
-        make_link "${DOTFILES_DIR}/tmux/tmux.conf" "${HOME}/.tmux.conf"
-        info "TPM will be installed at ~/.tmux/plugins/tpm"
-        if [ ! -d "${HOME}/.tmux/plugins/tpm" ]; then
-            if command -v git >/dev/null 2>&1; then
-                info "Cloning TPM..."
-                git clone --depth=1 https://github.com/tmux-plugins/tpm \
-                    "${HOME}/.tmux/plugins/tpm"
-                info "Press prefix + I inside tmux to install plugins."
-            else
-                warn "git not available — TPM not installed. Clone manually:"
-                warn "  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm"
-            fi
-        fi
+        info "tmux < 3.1: linking to ~/.tmux/"
+        tmux_dir="${HOME}/.tmux"
     fi
+    make_link "${DOTFILES_DIR}/tmux/tmux.conf" "${tmux_dir}/tmux.conf"
+    install_tpm "$tmux_dir"
 }
 
 setup_vim() {
@@ -152,14 +148,14 @@ setup_zsh() {
     fi
     local ver
     ver="$(zsh --version | grep -oE '[0-9]+\.[0-9]+' | head -1)"
-    info "zsh $ver (no XDG support — linking to ~/.zshrc)"
+    info "zsh $ver"
     make_link "${DOTFILES_DIR}/zsh/zshrc" "${HOME}/.zshrc"
 }
 
 setup_bash() {
     local ver
     ver="$(bash --version | head -1 | grep -oE '[0-9]+\.[0-9]+' | head -1)"
-    info "bash $ver (no XDG support)"
+    info "bash $ver"
     local os
     [ -f /usr/bin/sw_vers ] && os="mac" || os="linux"
     if [ "$os" = "mac" ]; then
@@ -179,7 +175,7 @@ setup_screen() {
     fi
     local ver
     ver="$(screen --version 2>&1 | grep -oE '[0-9]+\.[0-9]+' | head -1)"
-    info "screen $ver (no XDG support — linking to ~/.screenrc)"
+    info "screen $ver"
     make_link "${DOTFILES_DIR}/screen/screenrc" "${HOME}/.screenrc"
 }
 
