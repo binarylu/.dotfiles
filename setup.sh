@@ -134,6 +134,13 @@ setup_tmux() {
     fi
 }
 
+install_vim_plug() {
+    local vimrc="$1"
+    info "Installing vim plugins..."
+    vim -es -u "$vimrc" -i NONE -c "PlugInstall" -c "qa"
+    success "Vim plugins installed."
+}
+
 setup_vim() {
     if ! command -v vim >/dev/null 2>&1; then
         warn "vim not found — skipping."
@@ -149,9 +156,11 @@ setup_vim() {
         backup_if_needed "${HOME}/.vim"
         backup_if_needed "${HOME}/.viminfo"
         make_link "${DOTFILES_DIR}/vim/vimrc" "${XDG_CONFIG_HOME}/vim/vimrc"
+        install_vim_plug "${XDG_CONFIG_HOME}/vim/vimrc"
     else
         warn "patch 9.1.0327 not present — linking to ~/.vimrc"
         make_link "${DOTFILES_DIR}/vim/vimrc" "${HOME}/.vimrc"
+        install_vim_plug "${HOME}/.vimrc"
     fi
 }
 
