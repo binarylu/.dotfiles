@@ -1,7 +1,6 @@
 # vim
-# netrw is a kind of vim plugin/script which supports reading and writing files across networks. .netrwhist is a history file which maintains all the directories that were modified. So whenever you modify the contents of ~/.vim it adds one entry in .netrwhist
 .netrwhist
-*.swp
+*.sw[po]
 
 # Folder view configuration files
 .DS_Store
@@ -18,5 +17,32 @@ Thumbs.db
 # ignore the backup file
 *.bak
 
-# ignore ctags file
-tags
+# editors
+.vscode
+.cursor
+
+# python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pyright/
+
+# cython / c extensions
+*.so
+*.dylib
+
+# c / c++ / clang
+*.o
+*.a
+*.dSYM/
+
+# cuda
+*.ptx
+*.cubin
+*.fatbin
+
+# tools
+.venv
+**/.claude/settings.local.json

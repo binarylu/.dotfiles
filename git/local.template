@@ -1,0 +1,8 @@
+#[user]
+#   name =
+#   email =
+#   signingkey =
+
+# Example: per-directory identity override
+#[includeIf "gitdir:~/work/"]
+#    path = ~/.config/git/work

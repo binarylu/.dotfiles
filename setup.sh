@@ -61,6 +61,18 @@ version_ge() {
     printf '%s\n%s\n' "$2" "$1" | sort -V -C
 }
 
+# Prints the current platform: mac, linux, or win
+detect_platform() {
+    local platform
+    case "$(uname -s)" in
+        Darwin)                platform="mac"   ;;
+        Linux)                 platform="linux" ;;
+        MINGW*|CYGWIN*|MSYS*)  platform="win"   ;;
+        *)                     warn "Unknown platform '$(uname -s)' — assuming linux." ; platform="linux" ;;
+    esac
+    echo "$platform"
+}
+
 # ---------------------------------------------------------------------------
 # Per-tool setup functions
 # ---------------------------------------------------------------------------
@@ -70,32 +82,21 @@ setup_git() {
         warn "git not found — skipping."
         return
     fi
-    local ver
-    ver="$(git --version | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1)"
+    local ver platform
+    ver="$(git --version | grep -oE '[0-9]+\.[0-9]+\.[0-9]+')"
+    platform="$(detect_platform)"
     info "git $ver"
-    if version_ge "$ver" "1.7.12"; then
-        info "Linking into ${XDG_CONFIG_HOME}/git/"
-        backup_if_needed "${HOME}/.gitconfig"
-        backup_if_needed "${HOME}/.gitignore_global"
-        make_link "${DOTFILES_DIR}/git/config" "${XDG_CONFIG_HOME}/git/config"
-        make_link "${DOTFILES_DIR}/git/ignore" "${XDG_CONFIG_HOME}/git/ignore"
-        local local_config="${XDG_CONFIG_HOME}/git/local"
-        if [ ! -f "$local_config" ]; then
-            cat > "$local_config" <<'EOF'
-# Local git config — not tracked in dotfiles repo.
-# Set your identity here:
-[user]
-    name =
-    email =
+    info "Linking into ${XDG_CONFIG_HOME}/git/"
+    backup_if_needed "${HOME}/.gitconfig"
+    backup_if_needed "${HOME}/.gitignore_global"
+    make_link "${DOTFILES_DIR}/git/config" "${XDG_CONFIG_HOME}/git/config"
+    make_link "${DOTFILES_DIR}/git/ignore" "${XDG_CONFIG_HOME}/git/ignore"
+    make_link "${DOTFILES_DIR}/git/platform.${platform}" "${XDG_CONFIG_HOME}/git/platform"
 
-# Example: per-directory identity override
-#[includeIf "gitdir:~/work/"]
-#    path = ~/.config/git/work
-EOF
-            warn "Created ${local_config} — fill in your name and email."
-        fi
-    else
-        warn "git $ver is too old (XDG support requires >= 1.7.12) — skipping."
+    local local_config="${XDG_CONFIG_HOME}/git/local"
+    if [ ! -f "$local_config" ]; then
+        cp "${DOTFILES_DIR}/git/local.template" "$local_config"
+        info "Created ${local_config} — fill in your name and email."
     fi
 }
 
@@ -120,7 +121,7 @@ setup_tmux() {
         warn "tmux not found — skipping."
         return
     fi
-    local ver tmux_dir
+    local ver
     ver="$(tmux -V | grep -oE '[0-9]+\.[0-9]+([a-z]?)' | head -1)"
     info "tmux $ver"
     if version_ge "$ver" "3.2"; then
@@ -147,7 +148,7 @@ setup_vim() {
         return
     fi
     local ver xdg_support
-    ver="$(vim --version | head -1 | grep -oE '[0-9]+\.[0-9]+' | head -1)"
+    ver="$(vim --version | head -1 | grep -oE '[0-9]+\.[0-9]+')"
     xdg_support="$(vim --clean -es +':exec "! echo" has("patch-9.1.0327")' +:q 2>/dev/null)"
     info "vim $ver"
     if [ "$xdg_support" = "1" ]; then
@@ -170,25 +171,18 @@ setup_zsh() {
         return
     fi
     local ver
-    ver="$(zsh --version | grep -oE '[0-9]+\.[0-9]+' | head -1)"
+    ver="$(zsh --version | grep -oE '[0-9]+\.[0-9]+')"
     info "zsh $ver"
     make_link "${DOTFILES_DIR}/zsh/zshrc" "${HOME}/.zshrc"
 }
 
 setup_bash() {
-    local ver
-    ver="$(bash --version | head -1 | grep -oE '[0-9]+\.[0-9]+' | head -1)"
+    local ver platform
+    ver="$(bash --version | head -1 | grep -oE '[0-9]+\.[0-9]+')"
+    platform="$(detect_platform)"
     info "bash $ver"
-    local os
-    [ -f /usr/bin/sw_vers ] && os="mac" || os="linux"
-    if [ "$os" = "mac" ]; then
-        info "macOS: linking bash_profile + bashrc.mac"
-        make_link "${DOTFILES_DIR}/bash/bash_profile" "${HOME}/.bash_profile"
-        make_link "${DOTFILES_DIR}/bash/bashrc.mac"   "${HOME}/.bashrc"
-    else
-        info "Linux: linking bashrc.linux"
-        make_link "${DOTFILES_DIR}/bash/bashrc.linux" "${HOME}/.bashrc"
-    fi
+    [ "$platform" = "mac" ] && make_link "${DOTFILES_DIR}/bash/bash_profile" "${HOME}/.bash_profile"
+    make_link "${DOTFILES_DIR}/bash/bashrc.${platform}" "${HOME}/.bashrc"
 }
 
 setup_screen() {

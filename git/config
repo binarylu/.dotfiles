@@ -1,23 +1,17 @@
-[filter "media"]
-    required = true
-    clean = git media clean %f
-    smudge = git media smudge %f
 [filter "lfs"]
     required = true
-    clean = git-lfs clean %f
-    smudge = git-lfs smudge %f
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
 [core]
     # git >= 1.7.12 auto-reads ~/.config/git/ignore via XDG — no excludesfile needed.
     editor = vim
 
-    # true:  convert to LF when committing and convert CRLF when pulling
-    # input: convert to LF when committing and do not convert when pulling
-    # false: do not convert when committing and pulling
-    # autocrlf = input
+    # autocrlf is set per-platform in git/platform.{mac,linux,win}
 [alias]
     st = status
     ci = commit
     co = checkout
+    sw = switch
     br = branch
     lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>(%ae)[%G?]%Creset' --abbrev-commit
     d = difftool
@@ -29,6 +23,7 @@
     branch = false
 [diff]
     tool = vimdiff
+    algorithm = histogram
 [difftool]
     prompt = false
 [difftool "bc"]
@@ -40,11 +35,10 @@
     prompt = false
 [mergetool "bc"]
     trustExitCode = true
-[push]
-    default = simple
+[fetch]
+    prune = true
 [pull]
     ff = only
-[color]
-    ui = auto
 [include]
+    path = ~/.config/git/platform
     path = ~/.config/git/local
