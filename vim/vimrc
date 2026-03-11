@@ -127,6 +127,9 @@ set showcmd
 "set cmdheight=2
 " Show the filename in the window titlebar
 set title
+" Save and restore terminal title around vim
+let &t_ti .= "\e[22;0t"
+let &t_te .= "\e[23;0t"
 
 " Use UTF-8 without BOM, used inside Vim
 set encoding=utf-8 nobomb
