@@ -112,7 +112,7 @@ install_tpm() {
         git clone --depth=1 https://github.com/tmux-plugins/tpm "$tpm_dir"
     fi
     info "Installing tmux plugins..."
-    "$tpm_dir/bin/install_plugins"
+    "$tpm_dir/bin/install_plugins" || true
     success "Tmux plugins installed."
 }
 
@@ -138,7 +138,7 @@ setup_tmux() {
 install_vim_plug() {
     local vimrc="$1"
     info "Installing vim plugins..."
-    vim -es -u "$vimrc" -i NONE -c "PlugInstall" -c "qa"
+    vim -es -u "$vimrc" -i NONE -c "PlugInstall" -c "qa" || true
     success "Vim plugins installed."
 }
 
@@ -156,11 +156,13 @@ setup_vim() {
         backup_if_needed "${HOME}/.vimrc"
         backup_if_needed "${HOME}/.vim"
         backup_if_needed "${HOME}/.viminfo"
-        make_link "${DOTFILES_DIR}/vim/vimrc" "${XDG_CONFIG_HOME}/vim/vimrc"
+        make_link "${DOTFILES_DIR}/vim/vimrc"      "${XDG_CONFIG_HOME}/vim/vimrc"
+        [ -d "${XDG_CONFIG_HOME}/vim/skeletons" ] || cp -r "${DOTFILES_DIR}/vim/skeletons" "${XDG_CONFIG_HOME}/vim/skeletons"
         install_vim_plug "${XDG_CONFIG_HOME}/vim/vimrc"
     else
         warn "patch 9.1.0327 not present — linking to ~/.vimrc"
-        make_link "${DOTFILES_DIR}/vim/vimrc" "${HOME}/.vimrc"
+        make_link "${DOTFILES_DIR}/vim/vimrc"      "${HOME}/.vimrc"
+        [ -d "${HOME}/.vim/skeletons" ] || cp -r "${DOTFILES_DIR}/vim/skeletons" "${HOME}/.vim/skeletons"
         install_vim_plug "${HOME}/.vimrc"
     fi
 }
