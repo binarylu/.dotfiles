@@ -46,6 +46,20 @@ backup_if_needed() {
     mv "$target" "$backup"
 }
 
+# Copy file $1 to $2, creating parent directories as needed.
+# Returns 0 if copied, 1 if target already exists (skipped).
+make_copy() {
+    local source="$1"
+    local target="$2"
+    if [ -e "$target" ]; then
+        info "$target already exists — skipping."
+        return 1
+    fi
+    mkdir -p "$(dirname "$target")"
+    cp "$source" "$target"
+    success "Copied to $target from $source"
+}
+
 # Create a symlink: $2 -> $1  (source is inside this repo)
 make_link() {
     local source="$1"
@@ -86,7 +100,7 @@ setup_git() {
     ver="$(git --version | grep -oE '[0-9]+\.[0-9]+\.[0-9]+')"
     platform="$(detect_platform)"
     info "git $ver"
-    info "Linking into ${XDG_CONFIG_HOME}/git/"
+    info "Setting up git in ${XDG_CONFIG_HOME}/git/"
     backup_if_needed "${HOME}/.gitconfig"
     backup_if_needed "${HOME}/.gitignore_global"
     make_link "${DOTFILES_DIR}/git/config" "${XDG_CONFIG_HOME}/git/config"
@@ -94,9 +108,8 @@ setup_git() {
     make_link "${DOTFILES_DIR}/git/platform.${platform}" "${XDG_CONFIG_HOME}/git/platform"
 
     local local_config="${XDG_CONFIG_HOME}/git/local"
-    if [ ! -f "$local_config" ]; then
-        cp "${DOTFILES_DIR}/git/local.template" "$local_config"
-        info "Created ${local_config} — fill in your name and email."
+    if make_copy "${DOTFILES_DIR}/git/local.template" "$local_config"; then
+        info "Add your local settings to ${local_config}."
     fi
 }
 
@@ -112,8 +125,12 @@ install_tpm() {
         git clone --depth=1 https://github.com/tmux-plugins/tpm "$tpm_dir"
     fi
     info "Installing tmux plugins..."
-    "$tpm_dir/bin/install_plugins" || true
-    success "Tmux plugins installed."
+    tmux start-server \; set-environment -g TMUX_PLUGIN_MANAGER_PATH "$1/plugins/"
+    if "$tpm_dir/bin/install_plugins"; then
+        success "Tmux plugins installed."
+    else
+        warn "Tmux plugin installation failed — run prefix+I inside tmux to retry."
+    fi
 }
 
 setup_tmux() {
@@ -125,7 +142,7 @@ setup_tmux() {
     ver="$(tmux -V | grep -oE '[0-9]+\.[0-9]+([a-z]?)' | head -1)"
     info "tmux $ver"
     if version_ge "$ver" "3.2"; then
-        info "Linking into ${XDG_CONFIG_HOME}/tmux/"
+        info "Setting up tmux in ${XDG_CONFIG_HOME}/tmux/"
         backup_if_needed "${HOME}/.tmux.conf"
         backup_if_needed "${HOME}/.tmux"
         make_link "${DOTFILES_DIR}/tmux/tmux.conf" "${XDG_CONFIG_HOME}/tmux/tmux.conf"
@@ -138,7 +155,7 @@ setup_tmux() {
 install_vim_plug() {
     local vimrc="$1"
     info "Installing vim plugins..."
-    vim -es -u "$vimrc" -i NONE -c "PlugInstall" -c "qa" || true
+    vim -es -u "$vimrc" -i NONE -c "PlugInstall" -c "qa!" || true
     success "Vim plugins installed."
 }
 
@@ -151,20 +168,24 @@ setup_vim() {
     ver="$(vim --version | head -1 | grep -oE '[0-9]+\.[0-9]+')"
     xdg_support="$(vim --clean -es +':exec "! echo" has("patch-9.1.0327")' +:q 2>/dev/null)"
     info "vim $ver"
+    local vim_dir vimrc
     if [ "$xdg_support" = "1" ]; then
-        info "Linking into ${XDG_CONFIG_HOME}/vim/"
+        info "Setting up vim in ${XDG_CONFIG_HOME}/vim/"
         backup_if_needed "${HOME}/.vimrc"
         backup_if_needed "${HOME}/.vim"
         backup_if_needed "${HOME}/.viminfo"
-        make_link "${DOTFILES_DIR}/vim/vimrc"      "${XDG_CONFIG_HOME}/vim/vimrc"
-        [ -d "${XDG_CONFIG_HOME}/vim/skeletons" ] || cp -r "${DOTFILES_DIR}/vim/skeletons" "${XDG_CONFIG_HOME}/vim/skeletons"
-        install_vim_plug "${XDG_CONFIG_HOME}/vim/vimrc"
+        vim_dir="${XDG_CONFIG_HOME}/vim"
+        vimrc="${XDG_CONFIG_HOME}/vim/vimrc"
     else
         warn "patch 9.1.0327 not present — linking to ~/.vimrc"
-        make_link "${DOTFILES_DIR}/vim/vimrc"      "${HOME}/.vimrc"
-        [ -d "${HOME}/.vim/skeletons" ] || cp -r "${DOTFILES_DIR}/vim/skeletons" "${HOME}/.vim/skeletons"
-        install_vim_plug "${HOME}/.vimrc"
+        vim_dir="${HOME}/.vim"
+        vimrc="${HOME}/.vimrc"
     fi
+    make_link "${DOTFILES_DIR}/vim/vimrc" "$vimrc"
+    for f in "${DOTFILES_DIR}/vim/skeletons/"*; do
+        make_copy "$f" "${vim_dir}/skeletons/$(basename "$f")" || true
+    done
+    install_vim_plug "$vimrc"
 }
 
 setup_zsh() {
