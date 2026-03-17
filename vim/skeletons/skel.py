@@ -2,7 +2,7 @@
 
 
 def main():
-    @
+    @CURSOR@
 
 
 if __name__ == "__main__":

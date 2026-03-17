@@ -446,7 +446,7 @@ let g:better_whitespace_enabled = 1
 "------------------------------------
 " vim-skeleton settings {{{
 "------------------------------------
-let g:skeleton_template_dir = expand('<sfile>:p:h') . '/skeletons'
+let g:skeleton_template_dir = has('patch-9.1.0327') ? expand('<sfile>:p:h') . '/skeletons' : $HOME . '/.vim/skeletons'
 " }}}
 
 " }}}
