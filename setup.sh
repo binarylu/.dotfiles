@@ -105,10 +105,10 @@ setup_git() {
     backup_if_needed "${HOME}/.gitignore_global"
     make_link "${DOTFILES_DIR}/git/config" "${XDG_CONFIG_HOME}/git/config"
     make_link "${DOTFILES_DIR}/git/ignore" "${XDG_CONFIG_HOME}/git/ignore"
-    make_link "${DOTFILES_DIR}/git/platform.${platform}" "${XDG_CONFIG_HOME}/git/platform"
+    make_link "${DOTFILES_DIR}/git/config.platform.${platform}" "${XDG_CONFIG_HOME}/git/config.platform"
 
-    local local_config="${XDG_CONFIG_HOME}/git/local"
-    if make_copy "${DOTFILES_DIR}/git/local.template" "$local_config"; then
+    local local_config="${XDG_CONFIG_HOME}/git/config.local"
+    if make_copy "${DOTFILES_DIR}/git/config.local.template" "$local_config"; then
         info "Add your local settings to ${local_config}."
     fi
 }

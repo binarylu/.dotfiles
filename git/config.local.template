@@ -5,4 +5,4 @@
 
 # Example: per-directory identity override
 #[includeIf "gitdir:~/work/"]
-#    path = ~/.config/git/work
+#    path = ~/.config/git/config.work

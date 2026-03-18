@@ -6,7 +6,7 @@
     # git >= 1.7.12 auto-reads ~/.config/git/ignore via XDG — no excludesfile needed.
     editor = vim
 
-    # autocrlf is set per-platform in git/platform.{mac,linux,win}
+    # autocrlf is set per-platform in git/config.platform.{mac,linux,win}
 [alias]
     st = status
     ci = commit
@@ -40,5 +40,5 @@
 [pull]
     ff = only
 [include]
-    path = ~/.config/git/platform
-    path = ~/.config/git/local
+    path = ~/.config/git/config.platform
+    path = ~/.config/git/config.local

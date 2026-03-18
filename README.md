@@ -6,29 +6,30 @@ My dotfiles following the [XDG Base Directory](https://specifications.freedeskto
 
 ```
 bash/
-  bash_profile          sourced by .bash_profile on macOS
-  bashrc.mac            macOS-specific shell config
-  bashrc.linux          Linux-specific shell config
+  bash_profile            sourced by .bash_profile on macOS
+  bashrc.linux            Linux-specific shell config
+  bashrc.mac              macOS-specific shell config
 git/
-  config                main git config
-  ignore                global gitignore
-  local.template        template for machine-local identity (name, email, signingkey)
-  platform.mac          macOS-specific config (autocrlf = input)
-  platform.linux        Linux-specific config (autocrlf = input)
-  platform.win          Windows-specific config (autocrlf = true)
+  config                  main git config
+  config.local.template   template for machine-local identity (name, email, signingkey)
+  config.platform.linux   Linux-specific config (autocrlf = input)
+  config.platform.mac     macOS-specific config (autocrlf = input)
+  config.platform.win     Windows-specific config (autocrlf = true)
+  ignore                  global gitignore
 screen/
-  screenrc              GNU screen config
+  screenrc                GNU screen config
 tmux/
-  tmux.conf             tmux config (requires >= 3.2)
+  tmux.conf               tmux config (requires >= 3.2)
 vim/
-  vimrc                 vim config (XDG-aware, requires vim >= 9.1.0327)
-  skeletons/            new-file templates for vim-skeleton
-    skel.sh             shell script template
-    skel.py             Python script template
-    skel.c              C program template
-    skel.cpp            C++ program template
+  skeletons/              new-file templates for vim-skeleton
+    skel.c                C program template
+    skel.cpp              C++ program template
+    skel.py               Python script template
+    skel.sbatch           SLURM batch job template
+    skel.sh               shell script template
+  vimrc                   vim config (XDG-aware, requires vim >= 9.1.0327)
 zsh/
-  zshrc                 zsh config (oh-my-zsh)
+  zshrc                   zsh config (oh-my-zsh)
 ```
 
 ## Setup
@@ -66,5 +67,5 @@ Existing files at link targets are renamed to `<name>.YYYYMMDD_HHMMSS.old` with 
 
 ### Notes
 
-- `git/local.template` is copied (not linked) to `~/.config/git/local` on first run — fill in your name and email.
+- `git/config.local.template` is copied (not linked) to `~/.config/git/config.local` on first run — fill in your name and email.
 - `vim/skeletons/` is copied (not linked) to `~/.config/vim/skeletons/` so templates can be customized per machine.
