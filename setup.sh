@@ -219,11 +219,16 @@ setup_screen() {
     make_link "${DOTFILES_DIR}/screen/screenrc" "${HOME}/.screenrc"
 }
 
+setup_ghostty() {
+    info "Setting up ghostty in ${XDG_CONFIG_HOME}/ghostty/"
+    make_link "${DOTFILES_DIR}/ghostty/config" "${XDG_CONFIG_HOME}/ghostty/config"
+}
+
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
-ALL_TOOLS=(git tmux vim zsh bash screen)
+ALL_TOOLS=(git tmux vim zsh bash screen ghostty)
 TOOLS_TO_SETUP=()
 
 if [ $# -gt 0 ]; then
@@ -252,8 +257,9 @@ for tool in "${TOOLS_TO_SETUP[@]}"; do
         vim)    setup_vim    ;;
         zsh)    setup_zsh    ;;
         bash)   setup_bash   ;;
-        screen) setup_screen ;;
-        *)      warn "Unknown tool '${tool}' — skipping." ;;
+        screen)   setup_screen   ;;
+        ghostty)  setup_ghostty  ;;
+        *)        warn "Unknown tool '${tool}' — skipping." ;;
     esac
 done
 
