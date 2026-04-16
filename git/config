@@ -26,6 +26,7 @@
     algorithm = histogram
 [difftool]
     prompt = false
+    trustExitCode = true
 [difftool "bc"]
     trustExitCode = true
 [merge]
