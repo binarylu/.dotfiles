@@ -178,6 +178,10 @@ if has('gui_running')
     augroup END
     call s:SyncTheme()
 else
+    if &term =~ '\%(screen\|tmux\)'
+      let &t_8f = "\e[38;2;%lu;%lu;%lum"
+      let &t_8b = "\e[48;2;%lu;%lu;%lum"
+    endif
     colorscheme catppuccin_mocha
 endif
 
