@@ -2,28 +2,32 @@
 #theme = Jellybeans
 #theme = iTerm2 Smoooooth
 #theme = Japanesque
-theme = "Catppuccin Mocha"
 #theme = Atom
 #theme = Ayu
 #theme = Night Lion v2
+theme = "Catppuccin Mocha"
 
 background-opacity = 0.88
 background-blur = 30
 
-#font-family = Monaco
-font-size = 14
-font-family = "Maple Mono NF CN"
-#font-family = "FiraCode Nerd Font Mono"
+font-family = FiraCode Nerd Font Mono
+font-family = Maple Mono NF CN
 #font-feature = +dlig
 font-feature = -calt
 #font-feature = +liga
 #cursor-style = block
 #cursor-style-blink = false
+
+unfocused-split-opacity = 0.5
+
 shell-integration-features = ssh-env,cursor,title
 copy-on-select = clipboard
-scrollback-limit=268435456
+scrollback-limit = 268435456
 
-unfocused-split-opacity = 0.3
+
+notify-on-command-finish = unfocused
+notify-on-command-finish-action = no-bell,notify
+notify-on-command-finish-after = 30s
 
 #keybind = global:cmd+grave_accent=toggle_quick_terminal
 keybind = global:ctrl+space=toggle_quick_terminal
