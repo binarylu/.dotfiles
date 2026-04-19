@@ -42,15 +42,13 @@ call plug#begin()
 Plug 'tpope/vim-sensible'
 Plug 'vim-scripts/restore_view.vim'     " automatically save and restore view
 
-Plug 'majutsushi/tagbar'
-Plug 'scrooloose/nerdcommenter'
+Plug 'preservim/tagbar'
+Plug 'preservim/nerdcommenter'
 Plug 'dense-analysis/ale'                   " async lint / fix; LSP client (:help ale)
 Plug 'jiangmiao/auto-pairs'
 Plug 'Valloric/ListToggle'                  " A simple vim plugin for toggling the display of the quickfix list and the location-list
 Plug 'tkhoa2711/vim-togglenumber'
 Plug 'tmhedberg/SimpylFold'                 " Fold python code more precise
-"Plug 'vim-scripts/loremipsum'              " Placeholder for frontpage development
-"Plug 'benmills/vimux'                       " make interacting with tmux from vim effortless
 Plug 'airblade/vim-gitgutter'               " shows a git diff in the 'gutter' (sign column).
 Plug 'tpope/vim-fugitive'                   " git integration, used for branch name in statusline
 Plug 'ntpeters/vim-better-whitespace'       " highlight and strip trailing whitespace
@@ -84,9 +82,6 @@ let g:tagbar_autofocus = 1
 let g:tagbar_sort = 0
 let g:tagbar_previewwin_pos = 'botright'
 
-" vim-better-whitespace
-let g:better_whitespace_enabled = 1
-
 " vim-skeleton
 let g:skeleton_template_dir = has('patch-9.1.0327') ? expand('<sfile>:p:h') . '/skeletons' : $HOME . '/.vim/skeletons'
 
@@ -99,29 +94,18 @@ let g:skeleton_template_dir = has('patch-9.1.0327') ? expand('<sfile>:p:h') . '/
 set hidden
 " Use the OS clipboard by default (on versions compiled with `+clipboard`)
 set clipboard=unnamed
-" read/write a .viminfo file, don't store more
-"set viminfo='20,\"50
-" Enable mouse in all modes
-"set mouse=a
-" Use visual bell instead of beeping.
 set visualbell
 " Enable per-directory .vimrc files and disable unsafe commands in them
 set exrc
 set secure
 " Allow specified keys that move the cursor left/right to move to the previous/next line when the cursor is on the first/last character in the line.
 set whichwrap=b,s,<,>,[,]
-" Don't show the intro message when starting Vim
-"set shortmess=atI
 " Don't create backups when editing files in certain directories
 set backupskip=/tmp/*,/private/tmp/*
 set undofile
 
 " Don't reset cursor to start of line when moving around.
 set nostartofline
-"set rulerformat=%20(%2*%<%f%=\ %m%r\ %3l\ %c\ %p%%%)
-" Number of screen lines to use for the command-line.  Helps avoiding
-"set cmdheight=2
-" Show the filename in the window titlebar
 set title
 " Save and restore terminal title around vim
 let &t_ti .= "\e[22;0t"
@@ -129,31 +113,19 @@ let &t_te .= "\e[23;0t"
 
 set encoding=utf-8 nobomb
 set fencs=utf-8,ucs-bom,cp936,gb18030,big5,euc-jp,euc-kr,latin1
-" Set vim available to read binary file. You can also use the -b Vim argument.
-"set binary
-" Don't add empty newlines at the end of files
-"set noeol
 " When open binary files, display the values by hex
 set display+=uhex
 
-" Change mapleader
 let mapleader=","
-" timeout for map keys
-set timeoutlen=1000
-" timeout for terminal escape sequences
-set ttimeoutlen=100
 " Use F9 to toggle paste mode
 set pastetoggle=<F9>
 
-" Ignore case of searches
 set ignorecase
-" Make search case sensitive when search content contains upper case
+" case-sensitive when pattern contains uppercase
 set smartcase
 set hlsearch
-" Highlight the matched brackets
 set showmatch
 set termguicolors
-" Highlight current line
 set cursorline
 
 set tabstop=4
@@ -161,19 +133,10 @@ set shiftwidth=4
 set softtabstop=4
 set expandtab
 set autoindent
-"set smartindent  " superseded by cindent; handled by filetype plugins
-"set cindent      " can misbehave on non-C files (e.g. de-dents # in Python)
-set wrap
-" Start scrolling three lines before the horizontal window border
-"set scrolloff=3
-" Enable relative line numbers
 set number
 set relativenumber
 " Show invisible characters
 set listchars=tab:▸\ ,trail:·,eol:¬,nbsp:_
-"set list
-" fold method
-"set fdm=marker
 set foldmethod=indent
 " }}}
 
@@ -242,14 +205,6 @@ function! ToggleTextwidth()
     endif
 endfunction
 
-function! SetTab()
-    if &filetype == "ruby" || &filetype == "eruby" || &filetype == "html"
-        set tabstop=2 shiftwidth=2 softtabstop=2
-    else
-        set tabstop=4 shiftwidth=4 softtabstop=4
-    endif
-endfunction
-
 " }}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -257,8 +212,7 @@ endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup VimrcAutocmds
     autocmd!
-    " Set Tab format depends on file types
-    autocmd BufNewFile,BufRead * call SetTab()
+    autocmd FileType ruby,eruby,html setlocal tabstop=2 shiftwidth=2 softtabstop=2
     " Remove comment leader when joining lines (run after filetype plugins)
     autocmd FileType * setlocal formatoptions+=j
     " Do not highlight the current line when entering insert mode
@@ -276,27 +230,23 @@ augroup END
 " Map {{{
 " Check the key description: :h key-notation
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <space> za
-
+" Normal + Visual
 noremap <leader>ss :StripWhitespace<CR>
-noremap <leader>cr :call RemoveCR()<CR>
-" Save a file as root (,W)
-noremap <leader>W :w !sudo tee % > /dev/null<CR>
-" Close highlight
-nnoremap <leader><CR> :nohlsearch<CR>
-" Toggle tagbar
-noremap <leader>tb :TagbarToggle<CR>
-" Toggle set list
-noremap <leader>ls <ESC>:set invlist<CR>
-" Toggle textwidth
-noremap <leader>tw <ESC>:call ToggleTextwidth()<CR>
-noremap <leader>n :ToggleNumber<CR>
 
-" Move between different windows
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
+" Normal
+nnoremap <space>       za
+nnoremap <leader><CR>  :nohlsearch<CR>
+nnoremap <leader>W     :w !sudo tee % > /dev/null<CR>
+nnoremap <leader>cr    :call RemoveCR()<CR>
+nnoremap <leader>ls    :set invlist<CR>
+nnoremap <leader>m     :let &mouse = (&mouse ==# 'a' ? '' : 'a')<CR>
+nnoremap <leader>n     :ToggleNumber<CR>
+nnoremap <leader>tb    :TagbarToggle<CR>
+nnoremap <leader>tw    :call ToggleTextwidth()<CR>
+nnoremap <C-h>         <C-w>h
+nnoremap <C-j>         <C-w>j
+nnoremap <C-k>         <C-w>k
+nnoremap <C-l>         <C-w>l
 
 " }}}
 
