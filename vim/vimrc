@@ -11,16 +11,10 @@ if !has('nvim') && has('patch-9.1.0327')
     set packpath^=$XDG_DATA_HOME/vim,$XDG_CONFIG_HOME/vim
     set packpath+=$XDG_DATA_HOME/vim/after,$XDG_CONFIG_HOME/vim/after
     set viminfofile=$XDG_STATE_HOME/vim/viminfo
-    set undodir=$XDG_STATE_HOME/vim/undo
-    " Trailing // tells vim to use the full file path in swap/backup filenames,
-    " preventing collisions when editing files with the same name in different dirs.
-    set directory=$XDG_CACHE_HOME/vim/swap//
-    set backupdir=$XDG_CACHE_HOME/vim/backup//
     set viewdir=$XDG_CACHE_HOME/vim/view
-    silent! call mkdir(&undodir,   'p', 0700)
-    silent! call mkdir(&directory, 'p', 0700)
-    silent! call mkdir(&backupdir, 'p', 0700)
-    silent! call mkdir(&viewdir,   'p', 0700)
+    silent! call mkdir(&viewdir, 'p', 0700)
+else
+    set viminfofile=$HOME/.vim/viminfo
 endif
 " }}}
 
@@ -102,7 +96,6 @@ set secure
 set whichwrap=b,s,<,>,[,]
 " Don't create backups when editing files in certain directories
 set backupskip=/tmp/*,/private/tmp/*
-set undofile
 
 " Don't reset cursor to start of line when moving around.
 set nostartofline
