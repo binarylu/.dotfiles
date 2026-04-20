@@ -16,6 +16,8 @@ git/
   config.platform.mac     macOS-specific config (autocrlf = input)
   config.platform.win     Windows-specific config (autocrlf = true)
   ignore                  global gitignore
+ghostty/
+  config                  ghostty terminal config
 screen/
   screenrc                GNU screen config
 tmux/
@@ -54,14 +56,15 @@ Pass tool names as arguments to set up specific tools without prompts:
 
 ### XDG support matrix
 
-| Tool   | XDG since  | Fallback       |
-|--------|------------|----------------|
-| git    | 1.7.12     | `~/.gitconfig` |
-| tmux   | 3.2        | `~/.tmux.conf` |
-| vim    | 9.1.0327   | `~/.vimrc`     |
-| zsh    | —          | `~/.zshrc`     |
-| bash   | —          | `~/.bashrc`    |
-| screen | —          | `~/.screenrc`  |
+| Tool    | XDG since  | Fallback       |
+|---------|------------|----------------|
+| git     | 1.7.12     | `~/.gitconfig` |
+| tmux    | 3.2        | `~/.tmux.conf` |
+| vim     | 9.1.0327   | `~/.vimrc`     |
+| ghostty | always     | —              |
+| zsh     | —          | `~/.zshrc`     |
+| bash    | —          | `~/.bashrc`    |
+| screen  | —          | `~/.screenrc`  |
 
 Existing files at link targets are renamed to `<name>.YYYYMMDD_HHMMSS.old` with a warning.
 
