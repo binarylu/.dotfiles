@@ -18,6 +18,8 @@
     d2 = difftool --tool=bc --dir-diff
     m = mergetool
     m2 = mergetool --tool=bc
+    # show changed files
+    sc = "!f() { vim -p $(git diff --name-only \"$@\"); }; f"
 [pager]
     diff = false
     branch = false
@@ -26,8 +28,6 @@
     algorithm = histogram
 [difftool]
     prompt = false
-    trustExitCode = true
-[difftool "bc"]
     trustExitCode = true
 [merge]
     tool = vimdiff
