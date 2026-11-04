@@ -1,7 +1,3 @@
-[filter "lfs"]
-    required = true
-    clean = git-lfs clean -- %f
-    smudge = git-lfs smudge -- %f
 [core]
     # git >= 1.7.12 auto-reads ~/.config/git/ignore via XDG — no excludesfile needed.
     editor = vim
@@ -16,8 +12,10 @@
     lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>(%ae)[%G?]%Creset' --abbrev-commit
     d = difftool
     d2 = difftool --tool=bc --dir-diff
+    d3 = difftool --tool=vscode
     m = mergetool
     m2 = mergetool --tool=bc
+    m3 = mergetool --tool=vscode
     # show changed files
     sc = "!f() { vim -p $(git diff --name-only \"$@\"); }; f"
 [pager]
