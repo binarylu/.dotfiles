@@ -1,6 +1,9 @@
 # vim
 .netrwhist
-*.sw[po]
+*.sw?
+
+# editor backup files (emacs and others)
+*~
 
 # Folder view configuration files
 .DS_Store
@@ -13,9 +16,14 @@ Thumbs.db
 # Files that might appear on external disks
 .Spotlight-V100
 .Trashes
+.fseventsd
+.TemporaryItems
+.AppleDouble
 
 # ignore the backup file
 *.bak
+*.orig
+*.rej
 
 # editors
 .vscode
@@ -28,6 +36,8 @@ __pycache__/
 .mypy_cache/
 .ruff_cache/
 .pyright/
+.ipynb_checkpoints/
+*.egg-info/
 
 # cython / c extensions
 *.so
@@ -37,6 +47,8 @@ __pycache__/
 *.o
 *.a
 *.dSYM/
+compile_commands.json
+.clangd/
 
 # cuda
 *.ptx
