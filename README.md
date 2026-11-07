@@ -31,7 +31,8 @@ vim/
     skel.sh               shell script template
   vimrc                   vim config (XDG-aware, requires vim >= 9.1.0327)
 zsh/
-  zshrc                   zsh config (oh-my-zsh)
+  zshrc                   zsh config (antidote + starship; both optional)
+  zsh_plugins.txt         antidote plugin list, linked to ~/.zsh_plugins.txt
 ```
 
 ## Setup

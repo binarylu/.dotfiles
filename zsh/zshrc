@@ -1,89 +1,53 @@
-# Path to your oh-my-zsh installation.
-export ZSH=~/.oh-my-zsh
+typeset -U path fpath
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-ZSH_THEME="robbyrussell"
+# ---------- history ----------
+HISTFILE=~/.zsh_history
+HISTSIZE=50000
+SAVEHIST=50000
+setopt extended_history hist_expire_dups_first hist_ignore_dups hist_ignore_space hist_verify share_history
 
-# Uncomment the following line to use case-sensitive completion.
-CASE_SENSITIVE="true"
+# ---------- directories ----------
+setopt auto_cd auto_pushd pushd_ignore_dups pushdminus interactive_comments
+alias -g ...='../..'
+alias ll='ls -lh' la='ls -lAh' l='ls -lah'
+if [[ $OSTYPE == darwin* ]]; then alias ls='ls -G'; else alias ls='ls --color=auto'; fi
 
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
+# ---------- key bindings ----------
+bindkey -e
+bindkey '^[[A' up-line-or-search
+bindkey '^[[B' down-line-or-search
+# Shift+Tab goes backwards in the completion menu
+bindkey '^[[Z' reverse-menu-complete
 
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
+# ---------- completion (cached; rebuild dump at most once a day) ----------
+autoload -Uz compinit
+() {
+  setopt local_options extended_glob
+  if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then compinit; else compinit -C; fi
+}
+setopt complete_in_word always_to_end auto_menu
+zstyle ':completion:*:*:*:*:*' menu select
+# case-insensitive, then partial-word, then substring matching (as in oh-my-zsh)
+zstyle ':completion:*' matcher-list \
+  'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' \
+  'r:|=*' \
+  'l:|=* r:|=*'
 
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
+# ---------- plugins via antidote (skipped if not installed) ----------
+# Plugin list: ~/.zsh_plugins.txt (linked from this repo by setup.sh)
+# HOMEBREW_PREFIX is set by `brew shellenv` (no need to spawn brew at startup)
+for _antidote in ${HOMEBREW_PREFIX:-/opt/homebrew}/opt/antidote/share/antidote/antidote.zsh \
+                 ~/.antidote/antidote.zsh; do   # 2nd: git-clone install (Linux)
+  if [[ -f $_antidote ]]; then
+    source $_antidote
+    antidote load            # reads ~/.zsh_plugins.txt, caches to ~/.zsh_plugins.zsh
+    break
+  fi
+done
+unset _antidote
 
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
+# ---------- prompt (last) ----------
+(( $+commands[starship] )) && eval "$(starship init zsh)"
 
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git z brew colorize extract colored-man sudo d cp)
-
-# User configuration
-
-export PATH="$PATH:/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/texbin"
-# export MANPATH="/usr/local/man:$MANPATH"
-
-source $ZSH/oh-my-zsh.sh
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
-PS1='${ret_status}%{$fg_bold[green]%}%p %{$fg[cyan]%}%~ %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%} % %{$reset_color%}'
-
-if [ -d "$HOME/.rvm/bin"  ]; then
-    export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-fi
-
-PATH=`perl -e 'print join ":", grep {!$h{$_}++} split ":", $ENV{PATH}'`
-export PATH
+# machine-specific settings (PATH, secrets, work aliases) — not tracked
+if [[ -f ~/.zshrc.local ]]; then source ~/.zshrc.local; fi

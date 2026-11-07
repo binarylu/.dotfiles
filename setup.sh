@@ -197,6 +197,54 @@ setup_zsh() {
     ver="$(zsh --version | grep -oE '[0-9]+\.[0-9]+')"
     info "zsh $ver"
     make_link "${DOTFILES_DIR}/zsh/zshrc" "${HOME}/.zshrc"
+    make_link "${DOTFILES_DIR}/zsh/zsh_plugins.txt" "${HOME}/.zsh_plugins.txt"
+    install_zsh_deps "$(detect_platform)"
+}
+
+# Install starship and antidote if missing:
+#   mac:   via Homebrew (if present)
+#   linux: starship via its official install script, antidote via git clone
+install_zsh_deps() {
+    local platform="$1"
+    case "$platform" in
+        mac)
+            if ! command -v brew >/dev/null 2>&1; then
+                warn "Homebrew not found — install it (https://brew.sh), then: brew install starship antidote"
+                return
+            fi
+            local missing=() pkg
+            for pkg in starship antidote; do
+                brew list --formula "$pkg" >/dev/null 2>&1 || missing+=("$pkg")
+            done
+            if [ "${#missing[@]}" -gt 0 ]; then
+                HOMEBREW_NO_AUTO_UPDATE=1 brew install "${missing[@]}" \
+                    || warn "brew install ${missing[*]} failed."
+            fi
+            ;;
+        linux)
+            if ! command -v starship >/dev/null 2>&1; then
+                if command -v curl >/dev/null 2>&1; then
+                    info "Installing starship (official script; may ask for sudo)..."
+                    curl -sS https://starship.rs/install.sh | sh -s -- -y \
+                        || warn "starship install failed — see https://starship.rs"
+                else
+                    warn "curl not found — install starship manually: https://starship.rs"
+                fi
+            fi
+            if [ ! -d "${HOME}/.antidote" ]; then
+                if command -v git >/dev/null 2>&1; then
+                    info "Cloning antidote into ~/.antidote..."
+                    git clone --depth=1 https://github.com/mattmc3/antidote.git "${HOME}/.antidote" \
+                        || warn "antidote clone failed."
+                else
+                    warn "git not found — cannot install antidote."
+                fi
+            fi
+            ;;
+        *)
+            warn "Unsupported platform '$platform' — install starship and antidote manually."
+            ;;
+    esac
 }
 
 setup_bash() {
